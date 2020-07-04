@@ -1,4 +1,4 @@
-﻿namespace Dungeon
+﻿namespace Dungeon.Data
 {
 	public class MapPoint
 	{
@@ -18,11 +18,13 @@
 			{
 				case CorridorDirection.North: return new MapPoint(x, y + distance);
 				case CorridorDirection.South: return new MapPoint(x, y - distance);
-				case CorridorDirection.West: return new MapPoint(x + distance, y);
-				case CorridorDirection.East: return new MapPoint(x - distance, y);
+				case CorridorDirection.West: return new MapPoint(x - distance, y);
+				case CorridorDirection.East: return new MapPoint(x + distance, y);
 			}
 
 			return null;
 		}
+
+		public override string ToString() => $"x: {x}, y: {y}";
 	}
 }

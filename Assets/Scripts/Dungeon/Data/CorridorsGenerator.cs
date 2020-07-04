@@ -1,8 +1,9 @@
 ﻿// using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dungeon
+namespace Dungeon.Data
 {
 	public class CorridorsGenerator
 	{
@@ -24,12 +25,22 @@ namespace Dungeon
 			this.maxCorridorCount = maxCorridorCount;
 		}
 
+		public void AddCorridorWithRoomToDatabase(DungeonMapDatabase currentMapData)
+		{
+			Corridor corridor = GenerateCorridor(new MapPoint(0, 0), CorridorDirection.North);
+			currentMapData.corridors.Add(corridor);
+			GenerateAdjacentRoom(corridor, currentMapData);
+		}
+
 		public List<Corridor> GenerateCorridors()
 		{
 			var count = Random.Range(minCorridorCount, maxCorridorCount);
 			Corridor currentCorridor = GenerateCorridor(new MapPoint(0, 0), CorridorDirection.North); // first corridor generation
+			Debug.Log($"<color=white>generation {count} corridors </color>");
 
-			for (int i = 0; i < count; i++)
+			// GenerateAdjacentRoom(currentCorridor);
+
+			for (int i = 1; i < count; i++)
 			{
 				var dir = currentCorridor.RandomPerpendicularDir;
 				var newStartingPoint = currentCorridor.GetRandomCorridorPoint.GetNextPointTowardsDir(dir);
@@ -44,6 +55,30 @@ namespace Dungeon
 			var result = new Corridor(startingPoint, direction, Random.Range(minCorridorLength, maxCorridorLength));
 			corridors.Add(result);
 			return result;
+		}
+
+		private void GenerateAdjacentRoom(Corridor corridor, DungeonMapDatabase currentMapData)
+		{
+			var corridorRandomPoint = corridor.GetRandomCorridorPoint;
+			if (corridor.direction == CorridorDirection.North)
+			{
+				var xdd = new RoomGenerator();
+
+				var roomEntrancePoint = corridorRandomPoint.GetNextPointTowardsDir(CorridorDirection.East);
+
+				int roomMinSize = 4;
+				int roomMaxSize = 6;
+				
+				int roomSizeX = Random.Range(roomMinSize, roomMaxSize + 1);
+				int roomSizeY = Random.Range(roomMinSize, roomMaxSize + 1);
+
+				var random = Random.Range(0, 2) == 0;
+				var yStart = roomEntrancePoint.y - roomSizeY / 2;
+
+				var roomStartPoint = new MapPoint(roomEntrancePoint.x, yStart);
+
+				currentMapData.rooms.Add(new Room(roomStartPoint, new MapPoint(roomStartPoint.x + roomSizeX, roomStartPoint.y + roomSizeY), roomEntrancePoint));
+			}
 		}
 	}
 }

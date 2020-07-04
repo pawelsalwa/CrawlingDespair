@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
-namespace Dungeon
+namespace Dungeon.Data
 {
 	/// <summary> Contains map data from which map can be generated </summary>
 	[Serializable]
@@ -11,12 +9,19 @@ namespace Dungeon
 	{
 		// [SerializeField] private List<MapTileBase> mapTiles;
 
-		public readonly List<Corridor> corridors;
+		public readonly List<Corridor> corridors = new List<Corridor>();
+		public readonly List<Room> rooms = new List<Room>();
 
 		public DungeonMapDatabase(List<Corridor> corridors)
 		{
 			this.corridors = corridors;
 		}
+
+		public DungeonMapDatabase()
+		{
+			
+		}
+			
 		
 		
 		

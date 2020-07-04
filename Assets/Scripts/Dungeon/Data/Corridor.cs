@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dungeon
+namespace Dungeon.Data
 {
 	public class Corridor
 	{
