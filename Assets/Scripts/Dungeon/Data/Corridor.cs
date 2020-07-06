@@ -1,30 +1,31 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Dungeon.Data
 {
-	public class Corridor
+	public struct Corridor
 	{
 		public readonly MapPoint startingPoint;
 		public readonly int length;
-		public readonly CorridorDirection direction;
+		public readonly WorldDirection direction;
 
-		public Corridor(MapPoint startingPoint, CorridorDirection direction, int length)
+		public Corridor(MapPoint startingPoint, WorldDirection direction, int length)
 		{
 			this.startingPoint = startingPoint;
 			this.length = length;
 			this.direction = direction;
 		}
 
-		public CorridorDirection RandomPerpendicularDir
+		public WorldDirection RandomPerpendicularDir
 		{
 			get
 			{
 				bool random = Random.Range(0, 2) == 0;
-				if (direction == CorridorDirection.North || direction == CorridorDirection.South)
-					return random ? CorridorDirection.East : CorridorDirection.West;
+				if (direction == WorldDirection.North || direction == WorldDirection.South)
+					return random ? WorldDirection.East : WorldDirection.West;
 				else
-					return random ? CorridorDirection.North : CorridorDirection.South;
+					return random ? WorldDirection.North : WorldDirection.South;
 			}
 		}
 
@@ -51,6 +52,17 @@ namespace Dungeon.Data
 					yieldedPoint = yieldedPoint.GetNextPointTowardsDir(direction);
 				}
 			}
+		}
+		
+		// public int MinX => GetAllCorridorPoints.Min(point => point.x);
+		// public int MaxX => GetAllCorridorPoints.Max(point => point.x);
+		// public int MinY => GetAllCorridorPoints.Min(point => point.y);
+		// public int MaxY => GetAllCorridorPoints.Max(point => point.y);
+		public bool Vertical => direction == WorldDirection.North || direction == WorldDirection.South;
+
+		public void GenerateAdjacentRoom(DungeonMapDatabase currentMapData)
+		{
+			
 		}
 	}
 }

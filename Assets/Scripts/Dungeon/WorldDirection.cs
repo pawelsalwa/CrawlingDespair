@@ -1,6 +1,6 @@
 ﻿namespace Dungeon
 {
-	public enum CorridorDirection
+	public enum WorldDirection
 	{
 		North,
 		South,

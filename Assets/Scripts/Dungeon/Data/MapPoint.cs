@@ -1,30 +1,38 @@
-﻿namespace Dungeon.Data
+﻿using UnityEngine;
+
+namespace Dungeon.Data
 {
 	public class MapPoint
 	{
-		public int x, y;
+
+		public Vector2Int coords = new Vector2Int();
 
 		public MapPoint(int x, int y)
 		{
-			this.x = x;
-			this.y = y;
+			coords.x = x;
+			coords.y = y;
+		}
+		
+		public MapPoint(Vector2Int coords)
+		{
+			this.coords = coords;
 		}
 
-		public MapPoint GetNextPointTowardsDir(CorridorDirection direction) => GetPointTowardsDir(direction, 1);
+		public MapPoint GetNextPointTowardsDir(WorldDirection direction) => GetPointTowardsDir(direction, 1);
 
-		public MapPoint GetPointTowardsDir(CorridorDirection direction, int distance)
+		public MapPoint GetPointTowardsDir(WorldDirection direction, int distance)
 		{
 			switch (direction)
 			{
-				case CorridorDirection.North: return new MapPoint(x, y + distance);
-				case CorridorDirection.South: return new MapPoint(x, y - distance);
-				case CorridorDirection.West: return new MapPoint(x - distance, y);
-				case CorridorDirection.East: return new MapPoint(x + distance, y);
+				case WorldDirection.North: return new MapPoint(coords.x, coords.y + distance);
+				case WorldDirection.South: return new MapPoint(coords.x, coords.y - distance);
+				case WorldDirection.West: return new MapPoint(coords.x - distance, coords.y);
+				case WorldDirection.East: return new MapPoint(coords.x + distance, coords.y);
 			}
 
 			return null;
 		}
 
-		public override string ToString() => $"x: {x}, y: {y}";
+		public override string ToString() => $"x: {coords.x}, y: {coords.y}";
 	}
 }

@@ -1,7 +1,9 @@
 ﻿// using System;
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon.Data
 {
@@ -25,17 +27,17 @@ namespace Dungeon.Data
 			this.maxCorridorCount = maxCorridorCount;
 		}
 
-		public void AddCorridorWithRoomToDatabase(DungeonMapDatabase currentMapData)
+		public void AddCorridorWithRoomToDatabase(DungeonMapDatabase mapDatabase)
 		{
-			Corridor corridor = GenerateCorridor(new MapPoint(0, 0), CorridorDirection.North);
-			currentMapData.corridors.Add(corridor);
-			GenerateAdjacentRoom(corridor, currentMapData);
+			Corridor corridor = GenerateCorridor(new MapPoint(0, 0), WorldDirection.North);
+			mapDatabase.corridors.Add(corridor);
+			GenerateAdjacentRoom(corridor, mapDatabase);
 		}
 
 		public List<Corridor> GenerateCorridors()
 		{
 			var count = Random.Range(minCorridorCount, maxCorridorCount);
-			Corridor currentCorridor = GenerateCorridor(new MapPoint(0, 0), CorridorDirection.North); // first corridor generation
+			Corridor currentCorridor = GenerateCorridor(new MapPoint(0, 0), WorldDirection.North); // first corridor generation
 			Debug.Log($"<color=white>generation {count} corridors </color>");
 
 			// GenerateAdjacentRoom(currentCorridor);
@@ -50,7 +52,7 @@ namespace Dungeon.Data
 			return corridors;
 		}
 
-		private Corridor GenerateCorridor(MapPoint startingPoint, CorridorDirection direction)
+		private Corridor GenerateCorridor(MapPoint startingPoint, WorldDirection direction)
 		{
 			var result = new Corridor(startingPoint, direction, Random.Range(minCorridorLength, maxCorridorLength));
 			corridors.Add(result);
@@ -59,12 +61,32 @@ namespace Dungeon.Data
 
 		private void GenerateAdjacentRoom(Corridor corridor, DungeonMapDatabase currentMapData)
 		{
+			var roomGenerator = new RoomGenerator();
+
+			int minX, maxX,minY = 0, maxY = 0;
+			int minSideSize = 6, maxSideSize = Mathf.Max(12, corridor.length);
+
+			WorldDirection roomEntranceSide = WorldDirection.North;
+			switch (corridor.direction)
+			{
+				case WorldDirection.South:
+				case WorldDirection.North: roomEntranceSide = Utilities.RandomBool ? WorldDirection.East : WorldDirection.West; break;
+				case WorldDirection.West:
+				case WorldDirection.East: roomEntranceSide = Utilities.RandomBool ? WorldDirection.South : WorldDirection.North; break;
+			}
+
+			// int adjacentX = corridor.startingPoint.x + (roomEntranceSide == WorldDirection.East ? -1 : 1);
+			// roomGenerator.GenerateVerticalRoom(roomEntranceSide, corridor.MinY, adjacentX, minSideSize, maxSideSize);
+
+
+			// corridor.GenerateAdjacentRoom(currentMapData);
+			
 			var corridorRandomPoint = corridor.GetRandomCorridorPoint;
-			if (corridor.direction == CorridorDirection.North)
+			if (corridor.direction == WorldDirection.North)
 			{
 				var xdd = new RoomGenerator();
 
-				var roomEntrancePoint = corridorRandomPoint.GetNextPointTowardsDir(CorridorDirection.East);
+				var roomEntrancePoint = corridorRandomPoint.GetNextPointTowardsDir(WorldDirection.East);
 
 				int roomMinSize = 4;
 				int roomMaxSize = 6;
