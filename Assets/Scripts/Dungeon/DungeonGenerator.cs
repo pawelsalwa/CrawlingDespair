@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Dungeon.Data;
 using UnityEngine;
 
@@ -28,14 +29,39 @@ namespace Dungeon
 		{
 			// dungeonMapDatabase = new DungeonMapDatabase(GenerateCorridors());
 
-			RemoveExistingMap();
+			
 			dungeonMapDatabase = new DungeonMapDatabase();
 			new CorridorsGenerator(minCorridorLength, maxCorridorLength, minCorridorCount, maxCorridorCount)
-				.AddCorridorWithRoomToDatabase(dungeonMapDatabase);
+				.GenerateCorridorWithRoom(dungeonMapDatabase);
+
+			// var xd = new List<Vector2Int>(dungeonMapDatabase.corridors[0].allPositionsWithin);
+			// var xd1 = dungeonMapDatabase.corridors[0].allPositionsWithin.ToList();
+			// var xd2 = dungeonMapDatabase.rooms.ToArray();
 
 			
 			// GenerateCorridors();
 			// GenerateRooms();
+			InstantiateMapFromDatabase();
+			
+			
+		}
+
+		public void GenerateRoom()
+		{
+			var room = new RoomGenerator().GenerateRoomAdjacentToCorridor(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			dungeonMapDatabase.rooms.Add(room);
+			InstantiateMapFromDatabase();
+		}
+		
+		public void GenerateRoomNorth()
+		{
+			new RoomGenerator().TryGenerateNorthRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			InstantiateMapFromDatabase();
+		}
+		
+		public void GenerateRoomEast()
+		{
+			new RoomGenerator().TryGenerateEastRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
 			InstantiateMapFromDatabase();
 		}
 
@@ -65,6 +91,7 @@ namespace Dungeon
 
 		private void InstantiateMapFromDatabase()
 		{
+			RemoveExistingMap();
 			foreach (var corridor in dungeonMapDatabase.corridors)
 			{
 				InstantiateCorridor(corridor);
@@ -76,23 +103,33 @@ namespace Dungeon
 			}
 		}
 
-		private void InstantiateRoom(Room room)
+		private void InstantiateRoom(RectInt room)
 		{
-			foreach (var mapPoint in room.GetAllRoomPoints)
+			// for (int x = room.xMin; x < room.xMax; x++)
+			// {
+			// 	for (int y = room.yMin; y < room.yMax; y++)
+			// 	{
+			// 		var newTile = Instantiate(roomTileTemplate, transform);
+			// 		newTile.SetActive(true);
+			// 		newTile.transform.position = new Vector3(x * xTileSize, 0f,y * zTileSize);
+			// 	}
+			// }
+			
+			foreach (var mapPoint in room.allPositionsWithin)
 			{
 				var newTile = Instantiate(roomTileTemplate, transform);
 				newTile.SetActive(true);
 				newTile.transform.position = new Vector3(mapPoint.x * xTileSize, 0f,mapPoint.y * zTileSize);
 			}
 			
-			var newTileEntrance = Instantiate(roomEntranceTileTemplate, transform);
-			newTileEntrance.SetActive(true);
-			newTileEntrance.transform.position = new Vector3(room.Entrance.x * xTileSize, 0f,room.Entrance.y * zTileSize);
+			// var newTileEntrance = Instantiate(roomEntranceTileTemplate, transform);
+			// newTileEntrance.SetActive(true);
+			// newTileEntrance.transform.position = new Vector3(room.Entrance.x * xTileSize, 0f,room.Entrance.y * zTileSize);
 		}
 
-		private void InstantiateCorridor(Corridor corridor)
+		private void InstantiateCorridor(RectInt corridor)
 		{
-			foreach (var mapPoint in corridor.GetAllCorridorPoints)
+			foreach (var mapPoint in corridor.allPositionsWithin)
 			{
 				var newTile = Instantiate(corridorTileTemplate, transform);
 				newTile.SetActive(true);

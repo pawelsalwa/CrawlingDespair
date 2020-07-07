@@ -12,7 +12,10 @@ public class DungeonGeneratorEditor : Editor
 	
 	public override void OnInspectorGUI()
 	{
-		if (GUILayout.Button("Generate")) targetObj.GenerateNewMap();
+		if (GUILayout.Button("GenerateCorridor")) targetObj.GenerateNewMap();
+		if (GUILayout.Button("GenerateRoom")) targetObj.GenerateRoom();
+		if (GUILayout.Button("GenerateRoomNorth")) targetObj.GenerateRoomNorth();
+		if (GUILayout.Button("GenerateRoomEast")) targetObj.GenerateRoomEast();
 		if (GUILayout.Button("Remove existing map")) targetObj.RemoveExistingMap();
 		
 		base.OnInspectorGUI();

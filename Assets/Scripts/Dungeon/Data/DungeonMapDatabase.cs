@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Dungeon.Data
 {
@@ -9,13 +10,8 @@ namespace Dungeon.Data
 	{
 		// [SerializeField] private List<MapTileBase> mapTiles;
 
-		public readonly List<Corridor> corridors = new List<Corridor>();
-		public readonly List<Room> rooms = new List<Room>();
-
-		public DungeonMapDatabase(List<Corridor> corridors)
-		{
-			this.corridors = corridors;
-		}
+		public readonly List<RectInt> corridors = new List<RectInt>();
+		public readonly List<RectInt> rooms = new List<RectInt>();
 
 		public DungeonMapDatabase()
 		{
