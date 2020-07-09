@@ -23,12 +23,45 @@ namespace Dungeon.Data
 			this.maxCorridorCount = maxCorridorCount;
 		}
 
-		private RectInt corridor;
+		// private RectInt corridor;
 
-		public void GenerateCorridorWithRoom(DungeonMapDatabase database)
+		public void GenerateNewCorridor(DungeonMapDatabase database)
 		{
-			corridor = new RectInt(0, 0, 1, 10);
-			database.corridors.Add(corridor);
+			if (database.corridors.Count == 0)
+			{
+				GenerateFirstCorridor(database);
+				return;
+			}
+
+			var lastCorridor = database.corridors[database.corridors.Count - 1];
+			var length = Random.Range(minCorridorLength, maxCorridorLength);
+			
+			if (lastCorridor.Horizontal)
+			{
+				RectInt tmpVertical = new RectInt(0, 0, 0, length);
+			}
+			else
+			{
+				RectInt tmpHorizontal = new RectInt(0, 0, length, 0);
+			}
+
+			// foreach (var corridor in database.corridors)
+			// {
+			
+			// }
+			// database.GetCorridorStartingPoint
+
+
+
+		}
+
+		private void GenerateFirstCorridor(DungeonMapDatabase database) => 
+			database.RegisterRectAsCorridor(new RectInt(0, 0, 1, maxCorridorLength));
+
+		public void GenerateCorridorWithTwoNext(DungeonMapDatabase database)
+		{
+			// corridor = new RectInt(0, 0, 1, 10);
+			// database.corridors.Add(corridor);
 		}
 		
 		

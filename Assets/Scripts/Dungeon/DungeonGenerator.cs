@@ -25,14 +25,14 @@ namespace Dungeon
 		public int maxCorridorCount = 10; 
 
 		[ContextMenu("GenerateNewMap()")]
-		public void GenerateNewMap()
+		public void GenerateNewCorridor()
 		{
 			// dungeonMapDatabase = new DungeonMapDatabase(GenerateCorridors());
 
 			
 			dungeonMapDatabase = new DungeonMapDatabase();
 			new CorridorsGenerator(minCorridorLength, maxCorridorLength, minCorridorCount, maxCorridorCount)
-				.GenerateCorridorWithRoom(dungeonMapDatabase);
+				.GenerateNewCorridor(dungeonMapDatabase);
 
 			// var xd = new List<Vector2Int>(dungeonMapDatabase.corridors[0].allPositionsWithin);
 			// var xd1 = dungeonMapDatabase.corridors[0].allPositionsWithin.ToList();
@@ -46,10 +46,9 @@ namespace Dungeon
 			
 		}
 
-		public void GenerateRoom()
+		public void GenerateRoomWest()
 		{
-			var room = new RoomGenerator().GenerateRoomAdjacentToCorridor(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
-			dungeonMapDatabase.rooms.Add(room);
+			new RoomGenerator().GenerateWestRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
 			InstantiateMapFromDatabase();
 		}
 		
@@ -62,6 +61,12 @@ namespace Dungeon
 		public void GenerateRoomEast()
 		{
 			new RoomGenerator().TryGenerateEastRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			InstantiateMapFromDatabase();
+		}
+		
+		public void GenerateRoomSouth()
+		{
+			new RoomGenerator().TryGenerateSouthRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
 			InstantiateMapFromDatabase();
 		}
 
@@ -103,7 +108,7 @@ namespace Dungeon
 			}
 		}
 
-		private void InstantiateRoom(RectInt room)
+		private void InstantiateRoom(Room room)
 		{
 			// for (int x = room.xMin; x < room.xMax; x++)
 			// {
@@ -115,7 +120,7 @@ namespace Dungeon
 			// 	}
 			// }
 			
-			foreach (var mapPoint in room.allPositionsWithin)
+			foreach (var mapPoint in room.Rect.allPositionsWithin)
 			{
 				var newTile = Instantiate(roomTileTemplate, transform);
 				newTile.SetActive(true);
@@ -127,9 +132,9 @@ namespace Dungeon
 			// newTileEntrance.transform.position = new Vector3(room.Entrance.x * xTileSize, 0f,room.Entrance.y * zTileSize);
 		}
 
-		private void InstantiateCorridor(RectInt corridor)
+		private void InstantiateCorridor(Corridor corridor)
 		{
-			foreach (var mapPoint in corridor.allPositionsWithin)
+			foreach (var mapPoint in corridor.Rect.allPositionsWithin)
 			{
 				var newTile = Instantiate(corridorTileTemplate, transform);
 				newTile.SetActive(true);

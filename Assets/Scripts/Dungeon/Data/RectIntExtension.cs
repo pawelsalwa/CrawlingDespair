@@ -5,6 +5,7 @@ namespace Dungeon.Data
 {
 	public static class RectIntExtension
 	{
+		/// <summary> Moves provided rect, so its max equals newMax </summary>
 		public static void MoveToSetMax(this ref RectInt rectInt, Vector2Int newMax)
 		{
 			var delta = newMax - rectInt.max;
