@@ -1,5 +1,6 @@
 
 
+using Character.SetupData;
 using Character.Teddy;
 using UnityEngine;
 
@@ -11,10 +12,12 @@ namespace Character
 	public abstract class CharacterAnimatorBase
 	{
 		protected readonly Animator animator;
+		protected readonly AnimatorSetupBase data;
 
-		protected CharacterAnimatorBase(Animator animator)
+		protected CharacterAnimatorBase(Animator animator,  AnimatorSetupBase data)
 		{
 			this.animator = animator;
+			this.data = data;
 		}
 
 		public abstract void Update(AnimatorUpdateDataBase animatorUpdateDataBase);

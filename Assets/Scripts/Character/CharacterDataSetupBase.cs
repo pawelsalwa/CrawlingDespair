@@ -7,6 +7,5 @@ namespace Character
 	{
 		public IntRef TeddyHealth;
 		public IntRef TeddyMaxHealth;
-		public TeddyStateMachineSetup TeddyStateMachineSetup;
 	}
 }

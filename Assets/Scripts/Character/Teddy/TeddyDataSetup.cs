@@ -9,5 +9,6 @@ namespace Character.Teddy
 	{
 		public TeddyStateMachineSetup teddyFsmSetup;
 		public MovementSetupBase MovementSetup;
+		public TeddyAnimatorSetup TeddyAnimatorSetup;
 	}
 }

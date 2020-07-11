@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using Character.SetupData;
+using UnityEngine;
 
 namespace Character.Teddy
 {
 	public class TeddyAnimator : CharacterAnimatorBase
 	{
-		public TeddyAnimator(Animator animator) : base(animator)
+		private TeddyAnimatorSetup teddyAnimatorSetup => data as TeddyAnimatorSetup;
+
+		public TeddyAnimator(Animator animator, TeddyAnimatorSetup data) : base(animator, data)
 		{
 		}
 
@@ -16,6 +19,20 @@ namespace Character.Teddy
 				Debug.LogError($"<color=red> Type mismatch. Animator should be updated with proper Type of inheritance layer.</color>");
 				return;
 			}
+
+			SetMovement(teddyAnimatorUpdateData.velocity);
 		}
+
+		private void SetMovement(Vector2 velocity)
+		{
+			SetFloat(teddyAnimatorSetup.XVelFloat, velocity.x, teddyAnimatorSetup.MovementDampTime);
+			SetFloat(teddyAnimatorSetup.YVelFloat, velocity.y);
+		}
+
+		public void Attack() => SetTrigger(teddyAnimatorSetup.Attack);
+
+		public void SetTrigger(string value) => animator.SetTrigger(value);
+		public void SetFloat(string name, float value) => animator.SetFloat(name, value);
+		public void SetFloat(string name, float value, float dampTime) => animator.SetFloat(name, value, dampTime,Time.deltaTime);
 	}
 }

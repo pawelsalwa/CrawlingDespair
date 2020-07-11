@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class OrbitCameraInputProvider : MonoBehaviour
 {
-	[SerializeField] private CinemachineFreeLook cinemachineFreeLook;
-	[SerializeField] private InputMappingWrapper input;
+	[SerializeField] private CinemachineFreeLook cinemachineFreeLook = null;
+	[SerializeField] private InputMappingWrapper input = null;
 	[SerializeField] private float speedX = 1f;
 	[SerializeField] private float speedY = 1f;
 

@@ -35,6 +35,7 @@ namespace Character
 			CharacterInputControllerBase.Update();
 			CharacterStateMachineBase.Update();
 			CharacterAnimatorBase.Update(AnimatorUpdateDataBase);
+			CharacterMovementBase.Update();
 		}
 		
 		protected virtual void FixedUpdate()

@@ -1,4 +1,5 @@
 using System;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace Character.SetupData
@@ -6,6 +7,10 @@ namespace Character.SetupData
 	[Serializable]
 	public class MovementSetupBase
 	{
-		public float Speed = 1f;
+		public FloatRef cameraRotationY;
+		
+		public float WalkSpeed = 2.5f;
+		public float RunSpeed = 4.5f;
+		public float TurningFactor = 0.3f;
 	}
 }

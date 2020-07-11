@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TeddyHealth: {fileID: 11400000, guid: 264468104f7f6b244abfabf974b8793a, type: 2}
   TeddyMaxHealth: {fileID: 11400000, guid: dee9cbbbb550c8b4aa51b9e34c5fcedf, type: 2}
-  TeddyStateMachineSetup:
-    MovingStateData:
-      HasExitTime: 1
-      StateDuration: 1
   teddyFsmSetup:
     MovingStateData:
       HasExitTime: 0
       StateDuration: 1
   MovementSetup:
-    Speed: 5
+    cameraRotationY: {fileID: 11400000, guid: b3329e767c31ac04780b573e26f159aa, type: 2}
+    Speed: 2.5
+    TurningFactor: 0.2
+  TeddyAnimatorSetup:
+    XVelFloat: xVelFloat
+    YVelFloat: yVelFloat
+    Attack: attackTrigger

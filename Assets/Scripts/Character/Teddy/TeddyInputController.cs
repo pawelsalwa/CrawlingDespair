@@ -1,5 +1,6 @@
 ﻿using Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Character.Teddy
 {
@@ -18,6 +19,7 @@ namespace Character.Teddy
 		{
 			teddyInput.Movement = PlayerActions.Move.ReadValue<Vector2>();
 			teddyInput.Attack = PlayerActions.Fire.triggered;
+			teddyInput.Run = PlayerActions.Run.phase == InputActionPhase.Started;
 		}
 	}
 }
