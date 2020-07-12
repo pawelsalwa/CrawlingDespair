@@ -15,6 +15,9 @@ namespace Character
 		protected readonly MovementSetupBase movementSetupBase;
 		protected readonly CharacterTurning characterTurning;
 
+		/// <summary> This can be used for anim, its local space velocity </summary>
+		public Vector2 InternalCharacterVelocity { get; private set; }
+
 		protected CharacterMovementBase(CharacterController characterController, MovementSetupBase movementSetupBase)
 		{
 			this.characterController = characterController;
@@ -39,15 +42,16 @@ namespace Character
 
 		public void MoveByInput(Vector2 inputVal, bool teddyInputRun)
 		{
-			Vector2 movement = Rotate(inputVal, characterController.transform.eulerAngles.y).normalized;
-			movement *= teddyInputRun ? movementSetupBase.RunSpeed : movementSetupBase.WalkSpeed;
+			inputVal *= teddyInputRun ? movementSetupBase.RunSpeed : movementSetupBase.WalkSpeed;
+			InternalCharacterVelocity = inputVal;
+			Vector2 movement = Rotate(inputVal, characterController.transform.eulerAngles.y);
 			RequestControllerMove(movement);
 		}
 
 		private void RequestControllerMove(Vector2 motion)
 		{
-			Vector3 motion3d = new Vector3(motion.x, 0f, motion.y);
-			characterController.Move(motion3d * Time.deltaTime);
+			Vector3 motion3d = new Vector3(motion.x, 0f, motion.y) * Time.deltaTime;
+			characterController.Move(motion3d);
 		}
 
 		Vector2 Rotate(Vector2 aPoint, float aDegree)
@@ -58,6 +62,13 @@ namespace Character
 			return new Vector2(
 				aPoint.x * c + aPoint.y * s,
 				aPoint.y * c - aPoint.x * s);
+		}
+
+		/// <summary> imeediately calls move on controller </summary>
+		public void ForceMoveForward(float value)
+		{
+			Vector2 movement = Rotate(Vector2.up * value, characterController.transform.eulerAngles.y);
+			characterController.Move(new Vector3(movement.x, 0, movement.y));
 		}
 	}
 }

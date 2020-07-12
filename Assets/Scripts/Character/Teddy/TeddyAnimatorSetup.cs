@@ -13,7 +13,9 @@ namespace Character.Teddy
 
 		public string XVelFloat = "xVelFloat";
 		public string YVelFloat = "yVelFloat";
+		public string RunFloat = "runFloat";
 		public string Attack = "attackTrigger";
+		public string ReturnToDefault = "returnToDefaultTrigger";
 		
 		public float MovementDampTime = 0.1f;
 	}

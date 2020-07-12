@@ -5,5 +5,6 @@ namespace Character.Teddy
 	public class TeddyAnimatorUpdateData : AnimatorUpdateDataBase
 	{
 		public Vector2 velocity;
+		public bool run;
 	}
 }

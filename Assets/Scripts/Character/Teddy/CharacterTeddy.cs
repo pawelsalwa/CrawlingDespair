@@ -9,7 +9,7 @@ public class CharacterTeddy : CharacterBase
 
 	private TeddyInput teddyInput;
 	private TeddyStateMachine teddyStateMachine;
-	private TeddyAnimator teddyAnimator;
+	public TeddyAnimator TeddyAnimator;
 	private TeddyAnimatorUpdateData teddyAnimatorUpdateData;
 	private TeddyInputController teddyInputController;
 	private TeddyMovement teddyMovement;
@@ -20,7 +20,7 @@ public class CharacterTeddy : CharacterBase
 	protected override CharacterInputBase CharacterInputBase => teddyInput;
 	protected override CharacterDataSetupBase CharacterDataSetupBase => teddyDataSetup;
 	protected override CharacterPrefabSetupBase CharacterPrefabSetupBase => teddyPrefabSetup;
-	protected override CharacterAnimatorBase CharacterAnimatorBase => teddyAnimator;
+	protected override CharacterAnimatorBase CharacterAnimatorBase => TeddyAnimator;
 	protected override AnimatorUpdateDataBase AnimatorUpdateDataBase => teddyAnimatorUpdateData;
 	protected override CharacterInputControllerBase CharacterInputControllerBase => teddyInputController;
 
@@ -28,18 +28,18 @@ public class CharacterTeddy : CharacterBase
 	{
 		base.Start();
 
+		TeddyAnimator = new TeddyAnimator(teddyPrefabSetup.Animator, teddyDataSetup.TeddyAnimatorSetup);
 		teddyInput = new TeddyInput();
 		teddyStateMachine = new TeddyStateMachine(teddyInput, this, teddyDataSetup.teddyFsmSetup);
 
 		teddyInputController = new TeddyInputController(teddyInput, teddyPrefabSetup.InputMappingWrapper);
 
-		teddyAnimator = new TeddyAnimator(teddyPrefabSetup.Animator, teddyDataSetup.TeddyAnimatorSetup);
 		teddyMovement = new TeddyMovement(CharacterController, teddyDataSetup.MovementSetup);
 	}
 
 	protected override void Update()
 	{
-		teddyAnimatorUpdateData = new TeddyAnimatorUpdateData {velocity = new Vector2(CharacterController.velocity.magnitude, 0f)};
+		teddyAnimatorUpdateData = new TeddyAnimatorUpdateData {velocity = CharacterMovementBase.InternalCharacterVelocity, run = teddyInput.Run};
 		base.Update();
 	}
 }

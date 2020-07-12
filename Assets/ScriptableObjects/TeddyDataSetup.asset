@@ -15,14 +15,60 @@ MonoBehaviour:
   TeddyHealth: {fileID: 11400000, guid: 264468104f7f6b244abfabf974b8793a, type: 2}
   TeddyMaxHealth: {fileID: 11400000, guid: dee9cbbbb550c8b4aa51b9e34c5fcedf, type: 2}
   teddyFsmSetup:
-    MovingStateData:
+    movingStateSetup:
       HasExitTime: 0
       StateDuration: 1
+    attackStateSetup:
+      HasExitTime: 1
+      StateDuration: 0.65
+      TransitionToNextComboExitTime: 2
+      ComboWindowStart: 0
+      ComboWindowEnd: 2
+      DealDmgWindowStart: 0.15
+      DealDmgWindowEnd: 0.35
+      MovingDistance: 0
+      MovingCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.47998905
+          value: 0.0047369003
+          inSlope: -0.0035016623
+          outSlope: -0.0035016623
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.9791565
+          value: -0.002357483
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   MovementSetup:
     cameraRotationY: {fileID: 11400000, guid: b3329e767c31ac04780b573e26f159aa, type: 2}
-    Speed: 2.5
+    WalkSpeed: 2.5
+    RunSpeed: 4.5
     TurningFactor: 0.2
   TeddyAnimatorSetup:
     XVelFloat: xVelFloat
     YVelFloat: yVelFloat
+    RunFloat: runFloat
     Attack: attackTrigger
+    ReturnToDefault: returnToDefaultTrigger
+    MovementDampTime: 0.1

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Character.FSMSetupData
 {
 	[Serializable]
-	public class StateDataBase
+	public class StateSetupBase
 	{
 		[Tooltip("Should this state be active finitely?")]
 		public bool HasExitTime = false;

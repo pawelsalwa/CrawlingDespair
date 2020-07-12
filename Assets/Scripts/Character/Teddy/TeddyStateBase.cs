@@ -8,7 +8,7 @@ namespace Character.Teddy
 		protected CharacterTeddy Teddy => characterBase as CharacterTeddy;
 		protected TeddyStateMachine TeddyStateMachine => stateMachine as TeddyStateMachine;
 		
-		public TeddyStateBase(TeddyInput input, CharacterTeddy teddy, TeddyStateMachine teddyStateMachine, StateDataBase stateDataBase) : base(input, teddy, teddyStateMachine, stateDataBase)
+		public TeddyStateBase(TeddyInput input, CharacterTeddy teddy, TeddyStateMachine teddyStateMachine, StateSetupBase stateSetupBase) : base(input, teddy, teddyStateMachine, stateSetupBase)
 		{
 		}
 	}

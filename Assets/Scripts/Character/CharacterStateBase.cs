@@ -18,22 +18,22 @@ namespace Character
 		protected readonly CharacterBase characterBase;
 		protected readonly CharacterInputBase characterInput;
 		protected readonly CharacterStateMachineBase stateMachine;
-		protected readonly StateDataBase stateDataBase;
+		protected readonly StateSetupBase stateSetupBase;
 
 		protected float stateProgress = 0f;
 		protected float fixedStateProgress = 0f;
 
-		protected CharacterStateBase(CharacterInputBase characterInput, CharacterBase characterBase, CharacterStateMachineBase stateMachine, StateDataBase stateDataBase)
+		protected CharacterStateBase(CharacterInputBase characterInput, CharacterBase characterBase, CharacterStateMachineBase stateMachine, StateSetupBase stateSetupBase)
 		{
 			this.characterInput = characterInput;
 			this.characterBase = characterBase;
 			this.stateMachine = stateMachine;
-			this.stateDataBase = stateDataBase;
+			this.stateSetupBase = stateSetupBase;
 		}
 
 		protected virtual CharacterStateBase DefaultNextState => stateMachine.DefaultState;
-		protected virtual float StateDuration => stateDataBase.StateDuration;
-		protected float ProgressPercentage => stateProgress / stateDataBase.StateDuration;
+		protected virtual float StateDuration => stateSetupBase.StateDuration;
+		protected float ProgressPercentage => stateProgress / stateSetupBase.StateDuration;
 
 		protected bool Active { get; private set; } = false;
 
@@ -48,7 +48,7 @@ namespace Character
 		{
 			OnUpdate();
 			
-			if ((stateProgress += Time.deltaTime) >= StateDuration && stateDataBase.HasExitTime)
+			if ((stateProgress += Time.deltaTime) >= StateDuration && stateSetupBase.HasExitTime)
 			{
 				OnBeforeTransitionByExitTime();
 				RequestTransition(DefaultNextState);

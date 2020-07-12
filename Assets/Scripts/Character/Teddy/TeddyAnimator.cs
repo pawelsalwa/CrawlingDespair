@@ -20,16 +20,19 @@ namespace Character.Teddy
 				return;
 			}
 
-			SetMovement(teddyAnimatorUpdateData.velocity);
+			SetMovement(teddyAnimatorUpdateData.velocity, teddyAnimatorUpdateData.run);
 		}
 
-		private void SetMovement(Vector2 velocity)
+		private void SetMovement(Vector2 velocity, bool run)
 		{
 			SetFloat(teddyAnimatorSetup.XVelFloat, velocity.x, teddyAnimatorSetup.MovementDampTime);
-			SetFloat(teddyAnimatorSetup.YVelFloat, velocity.y);
+			SetFloat(teddyAnimatorSetup.YVelFloat, velocity.y, teddyAnimatorSetup.MovementDampTime);
+			SetFloat(teddyAnimatorSetup.RunFloat, run ? 1f : 0f, teddyAnimatorSetup.MovementDampTime);
+			
 		}
 
 		public void Attack() => SetTrigger(teddyAnimatorSetup.Attack);
+		public void ReturnToDefault() => SetTrigger(teddyAnimatorSetup.ReturnToDefault);
 
 		public void SetTrigger(string value) => animator.SetTrigger(value);
 		public void SetFloat(string name, float value) => animator.SetFloat(name, value);

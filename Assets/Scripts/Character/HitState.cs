@@ -7,7 +7,7 @@ namespace Character
 	{
 		// private HitStateData hitStateData => stateDataBase as HitStateData;
 		//
-		public HitState(CharacterInputBase characterInput, CharacterBase characterBase, CharacterStateMachineBase stateMachine, StateDataBase hitStateData) : base(characterInput, characterBase, stateMachine, hitStateData)
+		public HitState(CharacterInputBase characterInput, CharacterBase characterBase, CharacterStateMachineBase stateMachine, StateSetupBase hitStateSetupBase) : base(characterInput, characterBase, stateMachine, hitStateSetupBase)
 		{
 		}
 		//
