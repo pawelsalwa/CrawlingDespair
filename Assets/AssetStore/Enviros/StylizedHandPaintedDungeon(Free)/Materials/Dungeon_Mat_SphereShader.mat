@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dungeon_Mat_01
-  m_Shader: {fileID: 4800000, guid: 5b21266d27a00cc4095976256578454e, type: 3}
+  m_Name: Dungeon_Mat_SphereShader
+  m_Shader: {fileID: 4800000, guid: 63a0230f07d2db346909bd52cb2ea1af, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -78,9 +78,11 @@ Material:
     - _ZWrite: 1
     - _isWorking: 0
     - _offset: 1
+    - _radius: 5.02
     - _transparency: 0.4
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: 0.07418336, g: 0, b: 0.9972446, a: 0}
-    - _playerPos: {r: 7.553815, g: 0.033999167, b: -5.312751, a: 0}
+    - _playerDir: {r: -0.06383352, g: 0, b: -0.99796057, a: 0}
+    - _playerPos: {r: 3.8887365, g: 0.033999763, b: 11.325067, a: 0}
+    - _sphereCenter: {r: 7.1864924, g: 3.0117257, b: -10.25066, a: 0}
