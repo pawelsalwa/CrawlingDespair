@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dungeon.Data;
+using ExtensionMethods;
 using UnityEngine;
 
 namespace Dungeon
@@ -8,13 +10,13 @@ namespace Dungeon
 	/// <summary> generates corridors, then rooms </summary>
 	public class DungeonGenerator : MonoBehaviour
 	{
-		// private CorridorsGenerator corridorsGenerator = new CorridorsGenerator(5,10,5,10);
 
-		private DungeonMapDatabase dungeonMapDatabase;
+		public DungeonMapData dungeonMapData;
 
 		public GameObject corridorTileTemplate;
 		public GameObject roomTileTemplate;
 		public GameObject roomEntranceTileTemplate;
+		public GameObject wallTemplate;
 
 		public float xTileSize = 1f;
 		public float zTileSize = 1f;
@@ -22,124 +24,110 @@ namespace Dungeon
 		public int minCorridorLength = 5;
 		public int maxCorridorLength = 10;
 		public int minCorridorCount = 5;
-		public int maxCorridorCount = 10; 
+		public int maxCorridorCount = 10;
+
+		public Transform roomsParent;
+		public Transform corridorsParent;
+		public Transform wallsParent;
 
 		[ContextMenu("GenerateNewMap()")]
 		public void GenerateNewCorridor()
 		{
-			// dungeonMapDatabase = new DungeonMapDatabase(GenerateCorridors());
-
-			
-			dungeonMapDatabase = new DungeonMapDatabase();
-			new CorridorsGenerator(minCorridorLength, maxCorridorLength, minCorridorCount, maxCorridorCount)
-				.GenerateNewCorridor(dungeonMapDatabase);
-
-			// var xd = new List<Vector2Int>(dungeonMapDatabase.corridors[0].allPositionsWithin);
-			// var xd1 = dungeonMapDatabase.corridors[0].allPositionsWithin.ToList();
-			// var xd2 = dungeonMapDatabase.rooms.ToArray();
-
-			
-			// GenerateCorridors();
-			// GenerateRooms();
+			dungeonMapData = ScriptableObject.CreateInstance<DungeonMapData>();
+			dungeonMapData.TryToAddCorridor(CorridorsGenerator.GenerateFirstCorridor(maxCorridorLength));
 			InstantiateMapFromDatabase();
-			
-			
 		}
 
 		public void GenerateRoomWest()
 		{
-			new RoomGenerator().GenerateWestRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			RoomGenerator.GenerateWestRoom(dungeonMapData.corridors[0], dungeonMapData);
 			InstantiateMapFromDatabase();
 		}
 		
 		public void GenerateRoomNorth()
 		{
-			new RoomGenerator().TryGenerateNorthRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			RoomGenerator.TryGenerateNorthRoom(dungeonMapData.corridors[0], dungeonMapData);
 			InstantiateMapFromDatabase();
 		}
 		
 		public void GenerateRoomEast()
 		{
-			new RoomGenerator().TryGenerateEastRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			RoomGenerator.TryGenerateEastRoom(dungeonMapData.corridors[0], dungeonMapData);
 			InstantiateMapFromDatabase();
 		}
 		
 		public void GenerateRoomSouth()
 		{
-			new RoomGenerator().TryGenerateSouthRoom(dungeonMapDatabase.corridors[0], dungeonMapDatabase);
+			RoomGenerator.TryGenerateSouthRoom(dungeonMapData.corridors[0], dungeonMapData);
 			InstantiateMapFromDatabase();
 		}
 
 		[ContextMenu("RemoveExistingMap()")]
 		public void RemoveExistingMap()
 		{
-			for (int i = transform.childCount - 1; i >= 0; i--)
-			{
-				if (!transform.GetChild(i).gameObject.activeSelf) continue;
-				if (UnityEditor.EditorApplication.isPlaying)
-					Destroy(transform.GetChild(i).gameObject);
-				else
-					DestroyImmediate(transform.GetChild(i).gameObject);
-			}
+			roomsParent.DestroyChildren();
+			corridorsParent.DestroyChildren();
+			wallsParent.DestroyChildren();
 		}
 
-		[ContextMenu("GenerateRooms()")]
-		private void GenerateRooms()
+		private void InstantiateTile(Tile tile)
 		{
+			GameObject template = null;
+			Transform parent = null;
+			switch (tile.TileType)
+			{
+				case TileType.Corridor: template = corridorTileTemplate; parent = corridorsParent; break;
+				case TileType.Room: template = roomTileTemplate; parent = roomsParent; break;
+			}
+			InstantiateTile(template, parent, tile.x, tile.y);
 		}
 
-		// private List<Corridor> GenerateCorridors()
-		// {
-		// 	// return new CorridorsGenerator(minCorridorLength, maxCorridorLength, minCorridorCount, maxCorridorCount)
-		// 	// 	.AddCorridorWithRoomToDatabase(dungeonMapDatabase);
-		// }
+		private void InstantiateTile(GameObject template, Transform parent, int x, int y)
+		{
+			var newTile = Instantiate(template, parent);
+			newTile.SetActive(true);
+			newTile.transform.position = new Vector3(x * xTileSize, 0f,y * zTileSize);
+		}
 
 		private void InstantiateMapFromDatabase()
 		{
 			RemoveExistingMap();
-			foreach (var corridor in dungeonMapDatabase.corridors)
+			foreach (var tile in dungeonMapData.AllTiles)
+				InstantiateTile(tile);
+
+			InstantiateWalls();
+		}
+
+		private void InstantiateWalls()
+		{
+			for (int x = dungeonMapData.xMin; x <= dungeonMapData.xMax; x++)
 			{
-				InstantiateCorridor(corridor);
-			}
-			
-			foreach (var room in dungeonMapDatabase.rooms)
-			{
-				InstantiateRoom(room);
+				for (int y = dungeonMapData.yMin; y <= dungeonMapData.yMax; y++)
+				{
+					if (dungeonMapData[x, y] == null) continue;
+					if (dungeonMapData[x + 1, y] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.East);
+					if (dungeonMapData[x - 1, y] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.West);
+					if (dungeonMapData[x, y + 1] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.North);
+					if (dungeonMapData[x, y - 1] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.South);
+				}
 			}
 		}
 
-		private void InstantiateRoom(Room room)
+		private void InstantiateWall(Tile tile, WorldDirection side)
 		{
-			// for (int x = room.xMin; x < room.xMax; x++)
-			// {
-			// 	for (int y = room.yMin; y < room.yMax; y++)
-			// 	{
-			// 		var newTile = Instantiate(roomTileTemplate, transform);
-			// 		newTile.SetActive(true);
-			// 		newTile.transform.position = new Vector3(x * xTileSize, 0f,y * zTileSize);
-			// 	}
-			// }
-			
-			foreach (var mapPoint in room.Rect.allPositionsWithin)
+			var newWall = Instantiate(wallTemplate, wallsParent);
+			var pos =  new Vector3(tile.x * xTileSize, 0f, tile.y * zTileSize);
+			var rot = 0f;
+			switch (side)
 			{
-				var newTile = Instantiate(roomTileTemplate, transform);
-				newTile.SetActive(true);
-				newTile.transform.position = new Vector3(mapPoint.x * xTileSize, 0f,mapPoint.y * zTileSize);
+				case WorldDirection.North: pos.z += zTileSize / 2f; rot = 90f; break;
+				case WorldDirection.South: pos.z -= zTileSize / 2f; rot = 90f; break;
+				case WorldDirection.East: pos.x += xTileSize / 2f; break;
+				case WorldDirection.West: pos.x -= xTileSize / 2f; break;
 			}
-			
-			// var newTileEntrance = Instantiate(roomEntranceTileTemplate, transform);
-			// newTileEntrance.SetActive(true);
-			// newTileEntrance.transform.position = new Vector3(room.Entrance.x * xTileSize, 0f,room.Entrance.y * zTileSize);
-		}
-
-		private void InstantiateCorridor(Corridor corridor)
-		{
-			foreach (var mapPoint in corridor.Rect.allPositionsWithin)
-			{
-				var newTile = Instantiate(corridorTileTemplate, transform);
-				newTile.SetActive(true);
-				newTile.transform.position = new Vector3(mapPoint.x * xTileSize, 0f,mapPoint.y * zTileSize);
-			}
+			newWall.transform.position = pos;
+			newWall.transform.Rotate(Vector3.up, rot);
+			newWall.gameObject.SetActive(true);
 		}
 	}
 }

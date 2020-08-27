@@ -3,66 +3,58 @@ using UnityEngine;
 
 namespace Dungeon.Data
 {
-	public class CorridorsGenerator
+	public static class CorridorsGenerator
 	{
-		private readonly int minCorridorLength;
-		private readonly int maxCorridorLength;
-		private readonly int minCorridorCount;
-		private readonly int maxCorridorCount;
+		// private readonly int minCorridorLength;
+		// private readonly int maxCorridorLength;
+		// private readonly int minCorridorCount;
+		// private readonly int maxCorridorCount;
 
 		// private List<Corridor> corridors = new List<Corridor>();
 
-		public CorridorsGenerator(int minCorridorLength,
-			int maxCorridorLength,
-			int minCorridorCount,
-			int maxCorridorCount)
-		{
-			this.minCorridorLength = minCorridorLength;
-			this.maxCorridorLength = maxCorridorLength;
-			this.minCorridorCount = minCorridorCount;
-			this.maxCorridorCount = maxCorridorCount;
-		}
+		// public CorridorsGenerator(int minCorridorLength,
+		// 	int maxCorridorLength,
+		// 	int minCorridorCount,
+		// 	int maxCorridorCount)
+		// {
+		// 	this.minCorridorLength = minCorridorLength;
+		// 	this.maxCorridorLength = maxCorridorLength;
+		// 	this.minCorridorCount = minCorridorCount;
+		// 	this.maxCorridorCount = maxCorridorCount;
+		// }
 
 		// private RectInt corridor;
 
-		public void GenerateNewCorridor(DungeonMapDatabase database)
-		{
-			if (database.corridors.Count == 0)
-			{
-				GenerateFirstCorridor(database);
-				return;
-			}
+		// public void GenerateNewCorridor(DungeonMapData database)
+		// {
+		// 	// if (database.corridors.Count == 0)
+		// 	// {
+		// 		GenerateFirstCorridor(database);
+		// 		return;
+		// 	// }
+		// 	//
+		// 	// var lastCorridor = database.corridors[database.corridors.Count - 1];
+		// 	// var length = Random.Range(minCorridorLength, maxCorridorLength);
+		// 	//
+		// 	// if (lastCorridor.Horizontal)
+		// 	// {
+		// 	// 	RectInt tmpVertical = new RectInt(0, 0, 0, length);
+		// 	// }
+		// 	// else
+		// 	// {
+		// 	// 	RectInt tmpHorizontal = new RectInt(0, 0, length, 0);
+		// 	// }
+		// }
 
-			var lastCorridor = database.corridors[database.corridors.Count - 1];
-			var length = Random.Range(minCorridorLength, maxCorridorLength);
-			
-			if (lastCorridor.Horizontal)
-			{
-				RectInt tmpVertical = new RectInt(0, 0, 0, length);
-			}
-			else
-			{
-				RectInt tmpHorizontal = new RectInt(0, 0, length, 0);
-			}
+		public static Corridor GenerateFirstCorridor(int length) => new Corridor(new RectInt(0, 0, 1, length), 0);
+		
+			// database.TryToAddCorridor(new Corridor(new RectInt(0, 0, 1, maxCorridorLength), 0 ));
 
-			// foreach (var corridor in database.corridors)
-			// {
-			
-			// }
-			// database.GetCorridorStartingPoint
-
-
-
-		}
-
-		private void GenerateFirstCorridor(DungeonMapDatabase database) => 
-			database.RegisterRectAsCorridor(new RectInt(0, 0, 1, maxCorridorLength));
-
-		public void GenerateCorridorWithTwoNext(DungeonMapDatabase database)
-		{
-			// corridor = new RectInt(0, 0, 1, 10);
-			// database.corridors.Add(corridor);
-		}
+		// public void GenerateCorridorWithTwoNext(DungeonMapData database)
+		// {
+		// 	// corridor = new RectInt(0, 0, 1, 10);
+		// 	// database.corridors.Add(corridor);
+		// }
 		
 		
 

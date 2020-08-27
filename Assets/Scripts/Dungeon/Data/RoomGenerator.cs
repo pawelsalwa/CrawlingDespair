@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Dungeon.Data
 {
-	public class RoomGenerator
+	public static class RoomGenerator
 	{
 		// private WorldDirection NextDirClockwise(WorldDirection dir)
 		// {
@@ -19,25 +19,25 @@ namespace Dungeon.Data
 		// 	return WorldDirection.East;
 		// }
 
-		public void GenerateWestRoom(Corridor corridor, DungeonMapDatabase database)
+		public static void GenerateWestRoom(Corridor corridor, DungeonMapData database)
 		{
 			var newRoom = new RectInt(0, 0, 4, 4);
 			newRoom.MoveToSetMax(corridor.Rect.min + Vector2Int.up);
 			WorldDirection dir = WorldDirection.North;
-
+		
 			while (true)
 			{
-				if (database.AllMapTiles.Any(r => r.Overlaps(newRoom))) newRoom.Move(dir);
-				else 
+				if (database.Overlaps(newRoom)) newRoom.Move(dir);
+				else
 				{
-					database.RegisterRectAsRoom(newRoom);
+					database.TryToAddRoom(new Room(newRoom, 0));
 					return;
 				}
 				if (newRoom.yMin >= corridor.Rect.yMax) return;
 			}
 		}
-
-		public void TryGenerateNorthRoom(Corridor corridor, DungeonMapDatabase database)
+		
+		public static void TryGenerateNorthRoom(Corridor corridor, DungeonMapData database)
 		{
 			var newRoom = new RectInt(0, 0, 4, 4);
 			Vector2Int startPoint = new Vector2Int(corridor.Rect.xMin, corridor.Rect.yMax);
@@ -46,17 +46,17 @@ namespace Dungeon.Data
 			
 			while (true)
 			{
-				if (database.AllMapTiles.Any(r => r.Overlaps(newRoom))) newRoom.Move(dir);
+				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.RegisterRectAsRoom(newRoom);
+					database.TryToAddRoom(new Room(newRoom, 0));
 					return;
 				}
 				if (newRoom.xMin >= corridor.Rect.xMax) return;
 			}
 		}
 		
-		public void TryGenerateEastRoom(Corridor corridor, DungeonMapDatabase database)
+		public static void TryGenerateEastRoom(Corridor corridor, DungeonMapData database)
 		{
 			var newRoom = new RectInt(0, 0, 4, 4);
 			newRoom.MoveToSetMin(corridor.Rect.max + Vector2Int.down);
@@ -64,17 +64,17 @@ namespace Dungeon.Data
 			
 			while (true)
 			{
-				if (database.AllMapTiles.Any(r => r.Overlaps(newRoom))) newRoom.Move(dir);
+				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.RegisterRectAsRoom(newRoom);
+					database.TryToAddRoom(new Room(newRoom, 0));
 					return;
 				}
 				if (newRoom.yMax <= corridor.Rect.yMin) return;
 			}
 		}
 		
-		public void TryGenerateSouthRoom(Corridor corridor, DungeonMapDatabase database)
+		public static void TryGenerateSouthRoom(Corridor corridor, DungeonMapData database)
 		{
 			var newRoom = new RectInt(0, 0, 4, 4);
 			Vector2Int startPoint = new Vector2Int(corridor.Rect.xMax, corridor.Rect.yMin);
@@ -83,10 +83,10 @@ namespace Dungeon.Data
 			
 			while (true)
 			{
-				if (database.AllMapTiles.Any(r => r.Overlaps(newRoom))) newRoom.Move(dir);
+				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.RegisterRectAsRoom(newRoom);
+					database.TryToAddRoom(new Room(newRoom, 0));
 					return;
 				}
 				if (newRoom.xMax <= corridor.Rect.xMin) return;

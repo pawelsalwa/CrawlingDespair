@@ -96,7 +96,7 @@
                 
                 
                 //if( dot(_playerDir.xz, normalize(_playerPos.xz - i.worldPos.xz)) + _offset > 0  && _isWorking == 1) {
-                    col.a = max(i.isInsideSphere, (1 - maskVal.x));
+                   // col.a = max(i.isInsideSphere, (1 - maskVal.x));
                 //} else {
                 //    col.a = 1;         
                 //}

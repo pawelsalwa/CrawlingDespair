@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Dungeon;
+using Dungeon.Data;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,7 +13,11 @@ public class DungeonGeneratorEditor : Editor
 	
 	public override void OnInspectorGUI()
 	{
-		if (GUILayout.Button("GenerateCorridor")) targetObj.GenerateNewCorridor();
+		if (GUILayout.Button("GenerateCorridor"))
+		{
+		targetObj.GenerateNewCorridor();
+		}
+
 		GUILayout.Space(20);
 		if (GUILayout.Button("GenerateRoomWest")) targetObj.GenerateRoomWest();
 		if (GUILayout.Button("GenerateRoomNorth")) targetObj.GenerateRoomNorth();

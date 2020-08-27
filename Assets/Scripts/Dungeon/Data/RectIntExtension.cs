@@ -36,5 +36,7 @@ namespace Dungeon.Data
 		public static bool Overlaps(this RectInt a, RectInt b) =>
 			a.xMin < b.xMax && a.xMax > b.xMin &&
 			a.yMin < b.yMax && a.yMax > b.yMin;
+
+		public static bool Contains(this RectInt a, int x, int y) => Overlaps(a, new RectInt(x,y,0,0));
 	}
 }

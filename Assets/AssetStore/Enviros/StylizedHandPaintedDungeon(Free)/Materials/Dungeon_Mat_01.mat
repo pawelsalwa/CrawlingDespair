@@ -82,5 +82,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: 0.07418336, g: 0, b: 0.9972446, a: 0}
-    - _playerPos: {r: 7.553815, g: 0.033999167, b: -5.312751, a: 0}
+    - _playerDir: {r: 0.94790024, g: 0, b: 0.31856734, a: 0}
+    - _playerPos: {r: 1.072564, g: 0.034001075, b: -4.9538693, a: 0}
