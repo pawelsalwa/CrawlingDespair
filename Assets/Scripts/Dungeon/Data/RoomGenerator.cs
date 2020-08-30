@@ -1,23 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ExtensionMethods;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon.Data
 {
 	public static class RoomGenerator
 	{
-		// private WorldDirection NextDirClockwise(WorldDirection dir)
-		// {
-		// 	switch (dir)
-		// 	{
-		// 		case WorldDirection.North: return WorldDirection.East;
-		// 		case WorldDirection.South: return WorldDirection.West;
-		// 		case WorldDirection.West: return WorldDirection.North;
-		// 		case WorldDirection.East: return WorldDirection.South;
-		// 	}
-		//
-		// 	return WorldDirection.East;
-		// }
 
 		public static void GenerateWestRoom(Corridor corridor, DungeonMapData database)
 		{
@@ -30,7 +21,7 @@ namespace Dungeon.Data
 				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.TryToAddRoom(new Room(newRoom, 0));
+					database.TryToAddRoom(new Room(newRoom, corridor));
 					return;
 				}
 				if (newRoom.yMin >= corridor.Rect.yMax) return;
@@ -49,7 +40,7 @@ namespace Dungeon.Data
 				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.TryToAddRoom(new Room(newRoom, 0));
+					database.TryToAddRoom(new Room(newRoom, corridor));
 					return;
 				}
 				if (newRoom.xMin >= corridor.Rect.xMax) return;
@@ -67,7 +58,7 @@ namespace Dungeon.Data
 				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.TryToAddRoom(new Room(newRoom, 0));
+					database.TryToAddRoom(new Room(newRoom, corridor));
 					return;
 				}
 				if (newRoom.yMax <= corridor.Rect.yMin) return;
@@ -86,11 +77,52 @@ namespace Dungeon.Data
 				if (database.Overlaps(newRoom)) newRoom.Move(dir);
 				else
 				{
-					database.TryToAddRoom(new Room(newRoom, 0));
+					database.TryToAddRoom(new Room(newRoom, corridor));
 					return;
 				}
 				if (newRoom.xMax <= corridor.Rect.xMin) return;
 			}
+		}
+
+		private static void SetRoomEntrance(Room room, Corridor corridorToConnect)
+		{
+			List<Vector2Int> AllRoomConnectionPointsWithCorridor = new List<Vector2Int>();
+
+
+			foreach (var roomTile in room.Rect.allPositionsWithin)
+			{
+				foreach (var point in corridorToConnect.Rect.GetSurroundingPoints())
+				{
+					if (point == roomTile)
+					{
+						AllRoomConnectionPointsWithCorridor.Add(point);
+					}
+				}
+			}
+
+			int randomIdx = Random.Range(0, AllRoomConnectionPointsWithCorridor.Count);
+			room.Entrance = AllRoomConnectionPointsWithCorridor[randomIdx]; 
+			//
+			// if (corridorToConnect.Horizontal)
+			// {
+			// 	int commonMaxX = Mathf.Min(corridorToConnect.Rect.xMax, room.Rect.xMax);
+			// 	int commonMinx = Mathf.Max(corridorToConnect.Rect.xMin, room.Rect.xMin);
+			// 	int y = room.Rect.xMax > corridorToConnect.Rect.xMax ? room.Rect.yMin : room.Rect.yMax;
+			// 	room.Entrance = new Vector2Int(Random.Range(commonMinx, commonMaxX + 1), y);
+			//
+			// 	for (int i = 0; i < UPPER; i++)
+			// 	{
+			// 		
+			// 	}
+			// 	room.Rect.Contains
+			// }
+			// else
+			// {
+			// 	
+			// }
+			//
+			// Random.Range(corridorToConnect.Horizontal);
+			// corridorToConnect.Length
 		}
 	}
 }

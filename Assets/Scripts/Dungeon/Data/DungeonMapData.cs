@@ -23,6 +23,7 @@ namespace Dungeon.Data
 		/// <summary> first int means x coordinate, second means y </summary>
 		private Dictionary<int, Dictionary<int, Tile>> map = new Dictionary<int, Dictionary<int, Tile>>();
 
+		/// <summary> Makes any Tile of the map accessible via notation: mapInstance[x, y]; </summary>
 		public Tile this[int x, int y]
 		{
 			get
@@ -31,7 +32,7 @@ namespace Dungeon.Data
 				if (!map[x].ContainsKey(y)) return null;
 				return map[x][y];
 			}
-			set
+			private set
 			{
 				if (!map.ContainsKey(x)) map[x] = new Dictionary<int, Tile>();
 				map[x][y] = value;
@@ -68,9 +69,11 @@ namespace Dungeon.Data
 
 			foreach (var coord in room.Rect.allPositionsWithin)
 			{
-				this[coord.x, coord.y] = new Tile {x = coord.x, y = coord.y, TileType = TileType.Room};
+				this[coord.x, coord.y] = new Tile {x = coord.x, y = coord.y, TileType = TileType.Room, roomId = room.Id};
 			}
 
+			this[room.Entrance.x, room.Entrance.y].TileType = TileType.RoomEntrance;
+			
 			rooms.Add(room);
 		}
 

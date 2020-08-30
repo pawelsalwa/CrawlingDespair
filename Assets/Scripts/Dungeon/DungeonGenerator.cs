@@ -78,6 +78,7 @@ namespace Dungeon
 			{
 				case TileType.Corridor: template = corridorTileTemplate; parent = corridorsParent; break;
 				case TileType.Room: template = roomTileTemplate; parent = roomsParent; break;
+				case TileType.RoomEntrance: template = roomEntranceTileTemplate; parent = roomsParent; break;
 			}
 			InstantiateTile(template, parent, tile.x, tile.y);
 		}
@@ -104,13 +105,56 @@ namespace Dungeon
 			{
 				for (int y = dungeonMapData.yMin; y <= dungeonMapData.yMax; y++)
 				{
-					if (dungeonMapData[x, y] == null) continue;
-					if (dungeonMapData[x + 1, y] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.East);
-					if (dungeonMapData[x - 1, y] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.West);
-					if (dungeonMapData[x, y + 1] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.North);
-					if (dungeonMapData[x, y - 1] == null) InstantiateWall(dungeonMapData[x, y], WorldDirection.South);
+					if (dungeonMapData[x, y] != null)
+					{
+						InstantiateTileWalls(x, y);
+					} 
 				}
 			}
+		}
+
+		private void InstantiateTileWalls(int x, int y)
+		{
+			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.East)) InstantiateWall(dungeonMapData[x, y], WorldDirection.East);
+			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.West)) InstantiateWall(dungeonMapData[x, y], WorldDirection.West);
+			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.North)) InstantiateWall(dungeonMapData[x, y], WorldDirection.North);
+			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.South)) InstantiateWall(dungeonMapData[x, y], WorldDirection.South);
+		}
+
+		private bool ShouldHaveWall(Tile tile, WorldDirection dir)
+		{
+			Tile tileNextTo;
+			switch (dir)
+			{
+				case WorldDirection.East: tileNextTo = dungeonMapData[tile.x + 1, tile.y]; break;
+				case WorldDirection.West: tileNextTo = dungeonMapData[tile.x - 1, tile.y]; break;
+				case WorldDirection.North: tileNextTo = dungeonMapData[tile.x, tile.y + 1]; break;
+				case WorldDirection.South: tileNextTo = dungeonMapData[tile.x, tile.y - 1]; break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+			}
+
+			if (tileNextTo == null) return true;
+
+			switch (tile.TileType) // trzeba ogarnac zeby sie nie robily duplikaty scian ale to moze jak juz zdefiniujemy jak w ogole wygladaja te korytarze
+			{
+				case TileType.Corridor: break;
+				case TileType.Room:
+					//prevents other room from placing walls in the same place (room with lower id places walls, so new ones dont place it)
+					if (tile.roomId < tileNextTo.roomId) return true;
+					if (tileNextTo.TileType == TileType.Corridor) return true;
+					break;
+				case TileType.RoomEntrance:
+					if (tile.roomId < tileNextTo.roomId)
+					{
+						return true;
+					}
+
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+			return false;
 		}
 
 		private void InstantiateWall(Tile tile, WorldDirection side)

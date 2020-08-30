@@ -6,7 +6,8 @@ namespace Dungeon.Data
 	{
 		public int x, y;
 		public TileType TileType;
+		public int roomId = 0;
 	}
 	
-	public enum TileType { None, Corridor, Room }
+	public enum TileType { None, Corridor, Room, RoomEntrance}
 }

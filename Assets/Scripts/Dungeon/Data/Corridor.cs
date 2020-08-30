@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Dungeon.Data
 		private readonly int id;
 
 		public bool Horizontal => Rect.width > Rect.height;
+		public int Length => Mathf.Max(Rect.width, Rect.height);
 
 		public Corridor(RectInt rect, int id)
 		{
