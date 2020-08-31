@@ -10,4 +10,5 @@ namespace Dungeon.Data
 	}
 	
 	public enum TileType { None, Corridor, Room, RoomEntrance}
+	public enum WallType { None, Regular, Entrance}
 }

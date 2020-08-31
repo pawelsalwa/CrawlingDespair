@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Dungeon;
 using UnityEngine;
@@ -7,64 +8,38 @@ namespace ExtensionMethods
 {
 	public static class RectIntExtension
 	{
-		public static IEnumerable<Vector2Int> GetSurroundingPoints(this RectInt rect)
+		public static IEnumerable<Vector2Int> GetSurroundingPoints(this RectInt rect) // TODO something is wrong with indexes here, maybe only when rectInt is 1 tile wide
 		{
-			// start from point to the low left of the rect
-			Vector2Int startingPoint = new Vector2Int(rect.xMin - 1, rect.yMin - 1);
-			Vector2Int point = startingPoint;
-			WorldDirection dir = WorldDirection.North;
-			for (int y = rect.yMin - 1; y <= rect.yMax; y++) yield return new Vector2Int(point.x, y);
-			{
-				yield return point;
-				point.y++;
-			}
+
+			var result = new List<Vector2Int>();
 			
-			
-			while (true)
+			for (int y = rect.yMin; y < rect.yMax; y++)
 			{
-				if (point == rect.min - Vector2Int.one)
-				{
-					dir = WorldDirection.North;
-					point.y++;
-				}
-				if (point == new Vector2Int(rect.xMin - 1, rect.yMax + 1))
-				{
-					dir = WorldDirection.East;
-					point.x++;
-				}
-				if (point == rect.max + Vector2Int.one)
-				{
-					dir = WorldDirection.South;
-					point.y--;
-				}
-				if (point == new Vector2Int(rect.xMax + 1, rect.yMin - 1))
-				{
-					dir = WorldDirection.West;
-					point.x--;
-				}
-				
-				yield return point;
-
-				switch (dir)
-				{
-					case WorldDirection.North: point.y++; break;
-					case WorldDirection.South: point.y--; break;
-					case WorldDirection.East: point.x++; break;
-					case WorldDirection.West: point.x--; break;
-				}
-
-				// here if point is not in surrounding bounds we change yielding dir
-				// if (point.y == rect.yMax + 1 ||
-				//     point.x == rect.xMax + 1 ||
-				//     point.y == rect.yMin - 1 ||
-				//     point.x == rect.xMin - 1
-				// )
-				// 	dir = NextDirClockwise(dir);
-
-				// we break if we yielded around rect and are now back in starting pos 
-				if (point == startingPoint)
-					yield break;
+				result.Add(new Vector2Int(rect.xMin - 1, y));
 			}
+			for (int x = rect.xMin; x < rect.xMax; x++)
+			{
+				result.Add(new Vector2Int(x, rect.yMax));
+			}
+			for (int y = rect.yMax; y > rect.yMin; y--) result.Add(new Vector2Int(rect.xMax, y));
+			for (int x = rect.xMin; x < rect.xMax; x++) result.Add(new Vector2Int(x, rect.yMin - 1));
+
+			return result;
+			// // start from point to the low left of the rect
+			// for (int y = rect.yMin; y <= rect.yMax; y++)
+			// {
+			// 	Debug.Log($"<color=white>yield {new Vector2Int(rect.xMin - 1, y)}</color>");
+			// 	yield return new Vector2Int(rect.xMin - 1, y);
+			// }
+			//
+			// for (int x = rect.xMin; x <= rect.xMax; x++)
+			// {
+			// 	Debug.Log($"<color=orange>yield {new Vector2Int(x, rect.yMax + 1)}</color>");
+			// 	yield return new Vector2Int(x, rect.yMax + 1);
+			// }
+			// for (int y = rect.yMax; y >= rect.yMin; y--) yield return new Vector2Int(rect.xMax, y);
+			// for (int x = rect.xMax; x > rect.xMin; x--) yield return new Vector2Int(x, rect.yMin - 1);
+			// yield break;
 		}
 
 

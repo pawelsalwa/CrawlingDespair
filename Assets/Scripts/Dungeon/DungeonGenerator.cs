@@ -17,6 +17,7 @@ namespace Dungeon
 		public GameObject roomTileTemplate;
 		public GameObject roomEntranceTileTemplate;
 		public GameObject wallTemplate;
+		public GameObject entranceWallTemplate;
 
 		public float xTileSize = 1f;
 		public float zTileSize = 1f;
@@ -115,10 +116,50 @@ namespace Dungeon
 
 		private void InstantiateTileWalls(int x, int y)
 		{
-			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.East)) InstantiateWall(dungeonMapData[x, y], WorldDirection.East);
-			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.West)) InstantiateWall(dungeonMapData[x, y], WorldDirection.West);
-			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.North)) InstantiateWall(dungeonMapData[x, y], WorldDirection.North);
-			if (ShouldHaveWall(dungeonMapData[x, y], WorldDirection.South)) InstantiateWall(dungeonMapData[x, y], WorldDirection.South);
+			var wallType = GetWallType(dungeonMapData[x, y], WorldDirection.East);
+			InstantiateWall(GetWallTemplate(wallType), dungeonMapData[x, y], WorldDirection.East);
+			wallType = GetWallType(dungeonMapData[x, y], WorldDirection.West);
+			InstantiateWall(GetWallTemplate(wallType), dungeonMapData[x, y], WorldDirection.West);
+			wallType = GetWallType(dungeonMapData[x, y], WorldDirection.North);
+			InstantiateWall(GetWallTemplate(wallType), dungeonMapData[x, y], WorldDirection.North);
+			wallType = GetWallType(dungeonMapData[x, y], WorldDirection.South);
+			InstantiateWall(GetWallTemplate(wallType), dungeonMapData[x, y], WorldDirection.South);
+		}
+
+		public WallType GetWallType(Tile tile, WorldDirection dir)
+		{
+			Tile tileNextTo;
+			switch (dir)
+			{
+				case WorldDirection.East: tileNextTo = dungeonMapData[tile.x + 1, tile.y]; break;
+				case WorldDirection.West: tileNextTo = dungeonMapData[tile.x - 1, tile.y]; break;
+				case WorldDirection.North: tileNextTo = dungeonMapData[tile.x, tile.y + 1]; break;
+				case WorldDirection.South: tileNextTo = dungeonMapData[tile.x, tile.y - 1]; break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+			}
+
+			if (tileNextTo == null) return WallType.Regular;
+			switch (tile.TileType) // trzeba ogarnac zeby sie nie robily duplikaty scian ale to moze jak juz zdefiniujemy jak w ogole wygladaja te korytarze
+			{
+				case TileType.Corridor:
+					if (tileNextTo.TileType == TileType.Corridor)
+						return WallType.None;
+					break;
+				case TileType.Room:
+					//prevents other room from placing walls in the same place (room with lower id places walls, so new ones dont place it)
+					if (tile.roomId < tileNextTo.roomId) return WallType.Regular;
+					if (tileNextTo.TileType == TileType.Corridor) return WallType.Regular;
+					if (tileNextTo.TileType == TileType.RoomEntrance || tileNextTo.TileType == TileType.Room) return WallType.None;
+					break;
+				case TileType.RoomEntrance:
+					if (tile.roomId < tileNextTo.roomId)
+						return WallType.Regular;
+					if (tileNextTo.TileType == TileType.Corridor)
+						return WallType.Entrance;
+					break;
+			}
+			return WallType.None;
 		}
 
 		private bool ShouldHaveWall(Tile tile, WorldDirection dir)
@@ -157,17 +198,30 @@ namespace Dungeon
 			return false;
 		}
 
-		private void InstantiateWall(Tile tile, WorldDirection side)
+
+		private GameObject GetWallTemplate(WallType type)
 		{
-			var newWall = Instantiate(wallTemplate, wallsParent);
+			switch (type)
+			{
+				case WallType.None: return null;
+				case WallType.Regular: return wallTemplate;
+				case WallType.Entrance: return entranceWallTemplate;
+			}
+			return null;
+		}
+
+		private void InstantiateWall(GameObject template, Tile tile, WorldDirection side)
+		{
+			if (template == null) return;
+			var newWall = Instantiate(template, wallsParent);
 			var pos =  new Vector3(tile.x * xTileSize, 0f, tile.y * zTileSize);
 			var rot = 0f;
 			switch (side)
 			{
-				case WorldDirection.North: pos.z += zTileSize / 2f; rot = 90f; break;
-				case WorldDirection.South: pos.z -= zTileSize / 2f; rot = 90f; break;
-				case WorldDirection.East: pos.x += xTileSize / 2f; break;
-				case WorldDirection.West: pos.x -= xTileSize / 2f; break;
+				case WorldDirection.North: pos.z += zTileSize / 2f; break;
+				case WorldDirection.South: pos.z -= zTileSize / 2f; break;
+				case WorldDirection.East: pos.x += xTileSize / 2f; rot = 90f; break;
+				case WorldDirection.West: pos.x -= xTileSize / 2f; rot = 90f; break;
 			}
 			newWall.transform.position = pos;
 			newWall.transform.Rotate(Vector3.up, rot);

@@ -101,28 +101,7 @@ namespace Dungeon.Data
 			}
 
 			int randomIdx = Random.Range(0, AllRoomConnectionPointsWithCorridor.Count);
-			room.Entrance = AllRoomConnectionPointsWithCorridor[randomIdx]; 
-			//
-			// if (corridorToConnect.Horizontal)
-			// {
-			// 	int commonMaxX = Mathf.Min(corridorToConnect.Rect.xMax, room.Rect.xMax);
-			// 	int commonMinx = Mathf.Max(corridorToConnect.Rect.xMin, room.Rect.xMin);
-			// 	int y = room.Rect.xMax > corridorToConnect.Rect.xMax ? room.Rect.yMin : room.Rect.yMax;
-			// 	room.Entrance = new Vector2Int(Random.Range(commonMinx, commonMaxX + 1), y);
-			//
-			// 	for (int i = 0; i < UPPER; i++)
-			// 	{
-			// 		
-			// 	}
-			// 	room.Rect.Contains
-			// }
-			// else
-			// {
-			// 	
-			// }
-			//
-			// Random.Range(corridorToConnect.Horizontal);
-			// corridorToConnect.Length
+			room.Entrance = AllRoomConnectionPointsWithCorridor[randomIdx];
 		}
 	}
 }
