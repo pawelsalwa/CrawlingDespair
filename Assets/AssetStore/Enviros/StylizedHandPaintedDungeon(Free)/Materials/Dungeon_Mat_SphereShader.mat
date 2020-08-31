@@ -78,11 +78,11 @@ Material:
     - _ZWrite: 1
     - _isWorking: 0
     - _offset: 1
-    - _radius: 5.53
+    - _radius: 1
     - _transparency: 0.4
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _playerDir: {r: -0.06383352, g: 0, b: -0.99796057, a: 0}
     - _playerPos: {r: 3.8887365, g: 0.033999763, b: 11.325067, a: 0}
-    - _sphereCenter: {r: -3.1740294, g: 1.1340011, b: -6.3810496, a: 0}
+    - _sphereCenter: {r: -7.4510946, g: 3.775679, b: 5.6469827, a: 0}
