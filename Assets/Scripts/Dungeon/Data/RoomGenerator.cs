@@ -12,7 +12,7 @@ namespace Dungeon.Data
 
 		public static void GenerateWestRoom(Corridor corridor, DungeonMapData database)
 		{
-			var newRoom = new RectInt(0, 0, 4, 4);
+			var newRoom = new RectInt(0, 0, Random.Range(3, 6), Random.Range(3, 6));
 			newRoom.MoveToSetMax(corridor.Rect.min + Vector2Int.up);
 			WorldDirection dir = WorldDirection.North;
 		

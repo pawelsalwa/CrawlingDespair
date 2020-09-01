@@ -125,10 +125,10 @@ namespace Dungeon
 			Vector2 pos1 = Vector2.zero, pos2 = Vector2.zero;
 			Vector2 leftBottom, leftTop, rightTop, rightBottom;
 
-			leftBottom = room.Rect.min;
-			leftTop = room.Rect.TopLeft(); 
-			rightTop = room.Rect.max;
-			rightBottom = room.Rect.RightBottom();
+			leftBottom = room.Rect.min * tileSize - Vector2.one * tileSize / 2f;
+			leftTop = room.Rect.TopLeft() * tileSize - Vector2.one * tileSize / 2f;
+			rightTop = room.Rect.max * tileSize - Vector2.one * tileSize / 2f;
+			rightBottom = room.Rect.RightBottom() * tileSize - Vector2.one * tileSize / 2f;
 			
 			
 			// leftBottom = new Vector2(room.Rect.min.x * xTileSize - xTileSize / 2f, room.Rect.min.y * zTileSize - zTileSize / 2f);
@@ -138,25 +138,25 @@ namespace Dungeon
 			
 			switch (dir)
 			{
-				case WorldDirection.North: pos1 = leftTop; pos2 = rightTop; break;
+				case WorldDirection.North: pos1 = leftTop + Vector2.left; pos2 = rightTop + Vector2.right; break;
 					// pos1.x = room.Rect.min.x * xTileSize - xTileSize / 2f; // left top
 					// pos1.y = room.Rect.max.y * zTileSize + zTileSize / 2f;
 					//
 					// pos2.x = room.Rect.max.x * xTileSize + xTileSize / 2f; // right top
 					// pos2.y = room.Rect.max.y * zTileSize + zTileSize / 2f;
-				case WorldDirection.South: pos1 = leftBottom; pos2 = rightBottom; break;
+				case WorldDirection.South: pos1 = leftBottom + Vector2.left; pos2 = rightBottom + Vector2.right; break;
 					// pos1.x = room.Rect.min.x * xTileSize - xTileSize / 2f; // left bottom
 					// pos1.y = room.Rect.min.y * zTileSize - zTileSize / 2f;
 					//
 					// pos2.x = room.Rect.min.x * xTileSize + xTileSize / 2f; // right bottom
 					// pos2.y = room.Rect.min.y * zTileSize - zTileSize / 2f;
-				case WorldDirection.West: pos1 = leftBottom; pos2 = leftTop; break;
+				case WorldDirection.West: pos1 = leftBottom + Vector2.down; pos2 = leftTop + Vector2.up; break;
 					// pos1.x = room.Rect.min.x * xTileSize - xTileSize / 2f; // left bottom
 					// pos1.y = room.Rect.min.y * zTileSize - zTileSize / 2f;
 					//
 					// pos2.x = room.Rect.min.x * xTileSize - xTileSize / 2f; // left top
 					// pos2.y = room.Rect.max.y * zTileSize + zTileSize / 2f;
-				case WorldDirection.East: pos1 = rightBottom; pos2 = rightTop; break;
+				case WorldDirection.East: pos1 = rightBottom + Vector2.down; pos2 = rightTop + Vector2.up; break;
 					// pos1.x = room.Rect.max.x * xTileSize + xTileSize / 2f; // right bottom
 					// pos1.y = room.Rect.min.y * zTileSize - zTileSize / 2f;
 					//
@@ -169,6 +169,7 @@ namespace Dungeon
 			block.SetVector("pos2", pos2);
 			block.SetFloat("_alpha", 0.1f);
 			wall.GetComponent<Renderer>().SetPropertyBlock(block);
+			wall.transform.GetChild(0).GetComponent<Renderer>().SetPropertyBlock(block);
 		}
 	}
 }

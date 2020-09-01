@@ -4,10 +4,12 @@
     {
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _TransparencyTex ("TransparencyTex", 2D) = "white" {}
         _alpha ("Alpha", Range(0,1)) = 1
         pos1 ("pos1", Vector) = (0,0,0,0)
         pos2 ("pos2", Vector) = (0,0,0,0)
         teddyPos ("teddyPos", Vector) = (0,0,0,0)
+        camPos ("camPos", Vector) = (0,0,0,0)
     }
     SubShader
     {
@@ -23,16 +25,19 @@
         #pragma target 3.0
 
         sampler2D _MainTex;
+        sampler2D _TransparencyTex;
 
         struct Input
         {
             float2 uv_MainTex;
+            float4 screenPos;
         };
 
         half _alpha;
         float2 pos1;
         float2 pos2;
         float2 teddyPos;
+        float3 camPos;
         
         //half _Metallic;
         
@@ -53,10 +58,12 @@
 			        ((lineTwoB.y - lineOneA.y) * (lineOneB.x - lineOneA.x) > (lineOneB.y - lineOneA.y) * (lineTwoB.x - lineOneA.x)));
 		}
         
-        float xdd() 
+        float xdd(Input IN) 
         {
-            float value = LineSegmentsIntersect(pos1, pos2, teddyPos, _WorldSpaceCameraPos.xz);
-            return value ? 0 : 1;
+            float value = LineSegmentsIntersect(pos1, pos2, teddyPos, camPos.xz);
+            float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
+            float transparency = 1 - tex2D(_TransparencyTex, screenUV).x;
+            return value ? transparency : 1;
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -67,7 +74,7 @@
             // Metallic and smoothness come from slider variables
             // o.Metallic = _Metallic;
             // o.Smoothness = _Glossiness;
-            o.Alpha = xdd();
+            o.Alpha = xdd(IN);
         }
         ENDCG
     }
