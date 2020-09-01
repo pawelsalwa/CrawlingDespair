@@ -155,5 +155,15 @@ namespace Dungeon.Data
 		// 	foreach (var item in corr.Rect.allPositionsWithin)
 		// 		map[item.x][item.y].TileType = TileType.Corridor;
 		// }
+		public Room GetRoom(int tileRoomId)
+		{
+			if (!rooms.Any(r => r.Id == tileRoomId))
+			{
+				Debug.Log($"<color=red>Room with provided ID ({tileRoomId}) doesnt exists. </color>");
+				return null;
+			}
+
+			return rooms.First(r => r.Id == tileRoomId);
+		}
 	}
 }

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dungeon_Mat_01
-  m_Shader: {fileID: 4800000, guid: 5b21266d27a00cc4095976256578454e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5eceec95f02af1041b06eb32c1f1f8df, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -76,11 +76,15 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _isWorking: 0
-    - _offset: 1
-    - _transparency: 0.4
+    - _alpha: 0.627
+    - _isWorking: 1
+    - _offset: 0.036
+    - _transparency: 0.766
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _playerDir: {r: 0.98859525, g: 0, b: -0.15059686, a: 0}
-    - _playerPos: {r: -2.841985, g: 0.034, b: 4.9448566, a: 0}
+    - _playerDir: {r: -0.9616008, g: 0, b: -0.2744521, a: 0}
+    - _playerPos: {r: 2.2231786, g: 0.059996422, b: 9.911989, a: 0}
+    - _pos1: {r: 1, g: 1, b: 1, a: 1}
+    - _pos2: {r: 0, g: 0, b: 0, a: 0}
+    - teddyPos: {r: 0, g: 0, b: 0, a: 0}

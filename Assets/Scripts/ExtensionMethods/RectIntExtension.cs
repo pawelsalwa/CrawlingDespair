@@ -8,19 +8,35 @@ namespace ExtensionMethods
 {
 	public static class RectIntExtension
 	{
-		public static IEnumerable<Vector2Int> GetSurroundingPoints(this RectInt rect) // TODO something is wrong with indexes here, maybe only when rectInt is 1 tile wide
+		public static bool lineSegmentsIntersect(Vector2 lineOneA, Vector2 lineOneB, Vector2 lineTwoA, Vector2 lineTwoB)
 		{
+			return (((lineTwoB.y - lineOneA.y) * (lineTwoA.x - lineOneA.x) > (lineTwoA.y - lineOneA.y) * (lineTwoB.x - lineOneA.x)) !=
+			        ((lineTwoB.y - lineOneB.y) * (lineTwoA.x - lineOneB.x) > (lineTwoA.y - lineOneB.y) * (lineTwoB.x - lineOneB.x)) &&
+			        ((lineTwoA.y - lineOneA.y) * (lineOneB.x - lineOneA.x) > (lineOneB.y - lineOneA.y) * (lineTwoA.x - lineOneA.x)) !=
+			        ((lineTwoB.y - lineOneA.y) * (lineOneB.x - lineOneA.x) > (lineOneB.y - lineOneA.y) * (lineTwoB.x - lineOneA.x)));
+		}
 
+
+		public static Vector2Int RightBottom(this RectInt rect) =>
+			new Vector2Int(rect.xMin, rect.yMax);
+		
+		public static Vector2Int TopLeft(this RectInt rect) =>
+			new Vector2Int(rect.xMax, rect.yMin);
+
+		public static IEnumerable<Vector2Int> GetSurroundingPoints(this RectInt rect) // TODO something is wrong with indexes here, maybe only when rectInt is 1 tile wide DONE I GUESS
+		{
 			var result = new List<Vector2Int>();
-			
+
 			for (int y = rect.yMin; y < rect.yMax; y++)
 			{
 				result.Add(new Vector2Int(rect.xMin - 1, y));
 			}
+
 			for (int x = rect.xMin; x < rect.xMax; x++)
 			{
 				result.Add(new Vector2Int(x, rect.yMax));
 			}
+
 			for (int y = rect.yMax; y > rect.yMin; y--) result.Add(new Vector2Int(rect.xMax, y));
 			for (int x = rect.xMin; x < rect.xMax; x++) result.Add(new Vector2Int(x, rect.yMin - 1));
 
