@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Dungeon.Data
 {
 	public class Tile
