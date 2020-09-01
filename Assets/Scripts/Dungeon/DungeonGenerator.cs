@@ -13,9 +13,9 @@ namespace Dungeon
 
 		public DungeonMapData dungeonMapData;
 
-		public GameObject corridorTileTemplate;
-		public GameObject roomTileTemplate;
-		public GameObject roomEntranceTileTemplate;
+		public DungeonTile corridorTileTemplate;
+		public DungeonTile roomTileTemplate;
+		public DungeonTile roomEntranceTileTemplate;
 		public GameObject wallTemplate;
 		public GameObject entranceWallTemplate;
 
@@ -73,7 +73,7 @@ namespace Dungeon
 
 		private void InstantiateTile(Tile tile)
 		{
-			GameObject template = null;
+			DungeonTile template = null;
 			Transform parent = null;
 			switch (tile.TileType)
 			{
@@ -81,14 +81,15 @@ namespace Dungeon
 				case TileType.Room: template = roomTileTemplate; parent = roomsParent; break;
 				case TileType.RoomEntrance: template = roomEntranceTileTemplate; parent = roomsParent; break;
 			}
-			InstantiateTile(template, parent, tile.x, tile.y);
+			InstantiateTile(template, parent, tile);
 		}
 
-		private void InstantiateTile(GameObject template, Transform parent, int x, int y)
+		private void InstantiateTile(DungeonTile template, Transform parent, Tile tile)
 		{
 			var newTile = Instantiate(template, parent);
-			newTile.SetActive(true);
-			newTile.transform.position = new Vector3(x * xTileSize, 0f,y * zTileSize);
+			newTile.gameObject.SetActive(true);
+			newTile.transform.position = new Vector3(tile.x * xTileSize, 0f,tile.y * zTileSize);
+			newTile.TileData = tile;
 		}
 
 		private void InstantiateMapFromDatabase()

@@ -126,10 +126,17 @@ namespace Dungeon
 			var room = dungeonMapData.GetRoom(tile.roomId);
 			Vector2 pos1 = Vector2.zero, pos2 = Vector2.zero;
 			Vector2 leftBottom, leftTop, rightTop, rightBottom;
-			leftBottom = new Vector2(room.Rect.min.x * xTileSize - xTileSize / 2f, room.Rect.min.y * zTileSize - zTileSize / 2f);
-			leftTop = new Vector2(room.Rect.min.x * xTileSize - xTileSize / 2f, room.Rect.max.y * zTileSize + zTileSize / 2f);
-			rightTop = new Vector2(room.Rect.max.x * xTileSize + xTileSize / 2f,  room.Rect.max.y * zTileSize + zTileSize / 2f);
-			rightBottom = new Vector2(room.Rect.min.x * xTileSize + xTileSize / 2f, room.Rect.min.y * zTileSize - zTileSize / 2f);
+
+			leftBottom = room.Rect.min;
+			leftTop = room.Rect.TopLeft();
+			rightTop = room.Rect.max;
+			rightBottom = room.Rect.RightBottom();
+			
+			
+			// leftBottom = new Vector2(room.Rect.min.x * xTileSize - xTileSize / 2f, room.Rect.min.y * zTileSize - zTileSize / 2f);
+			// leftTop = new Vector2(room.Rect.min.x * xTileSize - xTileSize / 2f, room.Rect.max.y * zTileSize + zTileSize / 2f);
+			// rightTop = new Vector2(room.Rect.max.x * xTileSize + xTileSize / 2f,  room.Rect.max.y * zTileSize + zTileSize / 2f);
+			// rightBottom = new Vector2(room.Rect.min.x * xTileSize + xTileSize / 2f, room.Rect.min.y * zTileSize - zTileSize / 2f);
 			
 			switch (dir)
 			{
@@ -160,7 +167,7 @@ namespace Dungeon
 			}
 
 			var block = new MaterialPropertyBlock();
-			block.SetVector("pos1", new Vector4(pos1.x, pos1.y, 0f, 0f));
+			block.SetVector("pos1", pos1);
 			block.SetVector("pos2", pos2);
 			block.SetFloat("_alpha", 0.1f);
 			wall.GetComponent<Renderer>().SetPropertyBlock(block);

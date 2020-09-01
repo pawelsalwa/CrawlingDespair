@@ -18,10 +18,10 @@ namespace ExtensionMethods
 
 
 		public static Vector2Int RightBottom(this RectInt rect) =>
-			new Vector2Int(rect.xMin, rect.yMax);
+			new Vector2Int(rect.xMax, rect.yMin);
 		
 		public static Vector2Int TopLeft(this RectInt rect) =>
-			new Vector2Int(rect.xMax, rect.yMin);
+			new Vector2Int(rect.xMin, rect.yMax);
 
 		public static IEnumerable<Vector2Int> GetSurroundingPoints(this RectInt rect) // TODO something is wrong with indexes here, maybe only when rectInt is 1 tile wide DONE I GUESS
 		{
