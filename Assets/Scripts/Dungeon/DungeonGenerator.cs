@@ -19,8 +19,7 @@ namespace Dungeon
 		public GameObject wallTemplate;
 		public GameObject entranceWallTemplate;
 
-		public float xTileSize = 1f;
-		public float zTileSize = 1f;
+		public Vector2 tileSize = Vector2.one;
 		
 		public int minCorridorLength = 5;
 		public int maxCorridorLength = 10;
@@ -88,7 +87,7 @@ namespace Dungeon
 		{
 			var newTile = Instantiate(template, parent);
 			newTile.gameObject.SetActive(true);
-			newTile.transform.position = new Vector3(tile.x * xTileSize, 0f,tile.y * zTileSize);
+			newTile.transform.position = new Vector3(tile.x * tileSize.x, 0f,tile.y * tileSize.y);
 			newTile.TileData = tile;
 		}
 
@@ -103,7 +102,7 @@ namespace Dungeon
 
 		private void InstantiateWalls()
 		{
-			WallsGenerator wallsGenerator = new WallsGenerator(wallsParent, wallTemplate, entranceWallTemplate, xTileSize, zTileSize);
+			WallsGenerator wallsGenerator = new WallsGenerator(wallsParent, wallTemplate, entranceWallTemplate, tileSize);
 			wallsGenerator.GenerateWalls(dungeonMapData);
 		}
 	}

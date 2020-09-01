@@ -12,18 +12,16 @@ namespace Dungeon
 		private readonly Transform wallsParent;
 		private readonly GameObject wallTemplate;
 		private readonly GameObject entranceWallTemplate;
-		private readonly float xTileSize;
-		private readonly float zTileSize;
+		private readonly Vector2 tileSize;
 
 		private DungeonMapData dungeonMapData;
 
-		public WallsGenerator(Transform wallsParent, GameObject wallTemplate, GameObject entranceWallTemplate, float xTileSize, float zTileSize)
+		public WallsGenerator(Transform wallsParent, GameObject wallTemplate, GameObject entranceWallTemplate, Vector2 tileSize)
 		{
 			this.wallsParent = wallsParent;
 			this.wallTemplate = wallTemplate;
 			this.entranceWallTemplate = entranceWallTemplate;
-			this.xTileSize = xTileSize;
-			this.zTileSize = zTileSize;
+			this.tileSize = tileSize;
 		}
 		
 		public void GenerateWalls(DungeonMapData data)
@@ -105,14 +103,14 @@ namespace Dungeon
 		{
 			if (template == null) return;
 			var newWall = Object.Instantiate(template, wallsParent);
-			var pos =  new Vector3(tile.x * xTileSize, 0f, tile.y * zTileSize);
+			var pos =  new Vector3(tile.x * tileSize.x, 0f, tile.y * tileSize.y);
 			var rot = 0f;
 			switch (side)
 			{
-				case WorldDirection.North: pos.z += zTileSize / 2f; break;
-				case WorldDirection.South: pos.z -= zTileSize / 2f; break;
-				case WorldDirection.East: pos.x += xTileSize / 2f; rot = 90f; break;
-				case WorldDirection.West: pos.x -= xTileSize / 2f; rot = 90f; break;
+				case WorldDirection.North: pos.z += tileSize.y / 2f; break;
+				case WorldDirection.South: pos.z -= tileSize.y / 2f; break;
+				case WorldDirection.East: pos.x += tileSize.x / 2f; rot = 90f; break;
+				case WorldDirection.West: pos.x -= tileSize.x / 2f; rot = 90f; break;
 			}
 			newWall.transform.position = pos;
 			newWall.transform.Rotate(Vector3.up, rot);
@@ -128,7 +126,7 @@ namespace Dungeon
 			Vector2 leftBottom, leftTop, rightTop, rightBottom;
 
 			leftBottom = room.Rect.min;
-			leftTop = room.Rect.TopLeft();
+			leftTop = room.Rect.TopLeft(); 
 			rightTop = room.Rect.max;
 			rightBottom = room.Rect.RightBottom();
 			

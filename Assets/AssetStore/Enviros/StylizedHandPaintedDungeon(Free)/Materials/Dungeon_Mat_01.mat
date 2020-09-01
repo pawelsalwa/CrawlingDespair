@@ -76,7 +76,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _alpha: 0.627
+    - _alpha: 0.747
     - _isWorking: 1
     - _offset: 0.036
     - _transparency: 0.766
@@ -89,4 +89,4 @@ Material:
     - _pos2: {r: 0, g: 0, b: 0, a: 0}
     - pos1: {r: 0, g: 0, b: 0, a: 0}
     - pos2: {r: 0, g: 0, b: 0, a: 0}
-    - teddyPos: {r: 1.3449044, g: 16.431221, b: 0, a: 0}
+    - teddyPos: {r: -2.3845575, g: -1.6677772, b: 0, a: 0}
