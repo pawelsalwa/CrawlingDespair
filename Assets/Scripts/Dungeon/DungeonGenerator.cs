@@ -30,6 +30,20 @@ namespace Dungeon
 		public Transform corridorsParent;
 		public Transform wallsParent;
 
+		public void Start()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			GenerateNewCorridor();
+			for (int i = 0; i < 5; i++)
+			{
+				GenerateRoomEast();
+				GenerateRoomWest();
+				GenerateRoomSouth();
+				GenerateRoomNorth();
+			}
+		}
+
 		[ContextMenu("GenerateNewMap()")]
 		public void GenerateNewCorridor()
 		{
