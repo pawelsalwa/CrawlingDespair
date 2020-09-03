@@ -167,7 +167,6 @@ namespace Dungeon
 			var block = new MaterialPropertyBlock();
 			block.SetVector("pos1", pos1);
 			block.SetVector("pos2", pos2);
-			block.SetFloat("_alpha", 0.1f);
 			wall.GetComponent<Renderer>().SetPropertyBlock(block);
 			wall.transform.GetChild(0).GetComponent<Renderer>().SetPropertyBlock(block);
 		}

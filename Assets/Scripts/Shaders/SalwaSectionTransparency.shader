@@ -14,6 +14,7 @@
     SubShader
     {
         Tags {"RenderType"="Transparent" "Queue"="Transparent"}
+        //Tags {"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout" }
         LOD 200
 
         CGPROGRAM
@@ -58,9 +59,9 @@
 			        ((lineTwoB.y - lineOneA.y) * (lineOneB.x - lineOneA.x) > (lineOneB.y - lineOneA.y) * (lineTwoB.x - lineOneA.x)));
 		}
         
-        float xdd(Input IN) 
+        float GetTransparency(Input IN) 
         {
-            float value = LineSegmentsIntersect(pos1, pos2, teddyPos, camPos.xz);
+            bool value = LineSegmentsIntersect(pos1, pos2, teddyPos, camPos.xz);
             float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
             float transparency = 1 - tex2D(_TransparencyTex, screenUV).x;
             return value ? transparency : 1;
@@ -74,7 +75,8 @@
             // Metallic and smoothness come from slider variables
             // o.Metallic = _Metallic;
             // o.Smoothness = _Glossiness;
-            o.Alpha = xdd(IN);
+            //clip(GetTransparency(IN) + 0.5);
+            o.Alpha = GetTransparency(IN);
         }
         ENDCG
     }
