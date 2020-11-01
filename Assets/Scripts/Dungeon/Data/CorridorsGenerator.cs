@@ -46,7 +46,7 @@ namespace Dungeon.Data
 		// 	// }
 		// }
 
-		public static Corridor GenerateFirstCorridor(int length) => new Corridor(new RectInt(0, 0, 2, length), 0);
+		public static Corridor GenerateFirstCorridor(int length) => new Corridor(new RectInt(0, 0, 20, 20), 0);
 		
 			// database.TryToAddCorridor(new Corridor(new RectInt(0, 0, 1, maxCorridorLength), 0 ));
 

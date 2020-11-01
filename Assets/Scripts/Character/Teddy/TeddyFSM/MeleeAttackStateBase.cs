@@ -40,7 +40,8 @@ namespace Character.Teddy.TeddyFSM
 
 		protected override void OnUpdate()
 		{
-			ApplyAttackMovement();
+			Teddy.CharacterMovementBase.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
+			//ApplyAttackMovement();
 
 			inputReset = inputReset || !TeddyInput.Attack;
 

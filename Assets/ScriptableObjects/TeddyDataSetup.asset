@@ -71,4 +71,4 @@ MonoBehaviour:
     RunFloat: runFloat
     Attack: attackTrigger
     ReturnToDefault: returnToDefaultTrigger
-    MovementDampTime: 0.1
+    MovementDampTime: 0.06
