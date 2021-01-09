@@ -18,7 +18,7 @@ public class PlayModeTools : MonoBehaviour
         //
         // if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
         //     GameState.TogglePause();
-
+        
     }
     
     public static void CleanUnityConsole()

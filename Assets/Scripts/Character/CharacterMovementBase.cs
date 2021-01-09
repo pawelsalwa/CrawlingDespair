@@ -7,7 +7,7 @@ namespace Character
 	/// <summary>
 	/// Implement this and add logic to control <see cref="characterController"/> to handle character motions.
 	/// </summary>
-	public abstract class CharacterMovementBase
+	public class CharacterMovementBase
 	{
 		// public event Action<Vector2> OnGroundedStart;
 
@@ -18,7 +18,7 @@ namespace Character
 		/// <summary> This can be used for anim, its local space velocity </summary>
 		public Vector2 InternalCharacterVelocity { get; private set; }
 
-		protected CharacterMovementBase(CharacterController characterController, MovementSetupBase movementSetupBase)
+		public CharacterMovementBase(CharacterController characterController, MovementSetupBase movementSetupBase)
 		{
 			this.characterController = characterController;
 			this.movementSetupBase = movementSetupBase;
@@ -29,16 +29,6 @@ namespace Character
 		{
 			characterTurning.Update();
 		}
-
-		public virtual void FixedUpdate()
-		{
-		}
-
-		public virtual void OnControllerColliderHit(ControllerColliderHit info)
-		{
-		}
-
-		public abstract void StopWalking();
 
 		public void MoveByInput(Vector2 inputVal, bool teddyInputRun)
 		{
@@ -69,6 +59,11 @@ namespace Character
 		{
 			Vector2 movement = Rotate(Vector2.up * value, characterController.transform.eulerAngles.y);
 			characterController.Move(new Vector3(movement.x, 0, movement.y));
+		}
+
+		public void ForceMovement(Vector3 animatorDeltaPosition)
+		{
+			characterController.Move(new Vector3(animatorDeltaPosition.x, 0, animatorDeltaPosition.y));
 		}
 	}
 }

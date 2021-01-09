@@ -16,28 +16,18 @@ namespace Character.Teddy
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void InitInput()
 		{
-			CinemachineCore.GetInputAxis = GetInputAxis; 
-			
-			Debug.Log($"<color=white>init input</color>");
 			InputMapping = new InputMapping();
 			InputMapping.Player.Enable();
 			InputMapping.UI.Disable();
 		}
 
-		private static float GetInputAxis(string axisname)
+		public static void EnableUiMapping()
 		{
-			// var xd = InputMapping.Player.Look.ReadValue<Vector2>();
-			// Debug.Log($"<color=white>get input axis {axisname}, val = {xd}</color>");
-
-			return 0f;
+			InputMapping.Player.Disable();
+			InputMapping.UI.Enable();
 		}
 
-		private void OnEnable()
-		{
-			InputMapping = new InputMapping();
-		}
-
-		private static void EnablePlayerMapping(InputMapping InputMapping)
+		public static void EnablePlayerMapping()
 		{
 			InputMapping.Player.Enable();
 			InputMapping.UI.Disable();

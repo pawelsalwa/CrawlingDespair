@@ -40,7 +40,7 @@ namespace Character.Teddy.TeddyFSM
 
 		protected override void OnUpdate()
 		{
-			Teddy.CharacterMovementBase.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
+			// Teddy.CharacterMovementBase.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
 			//ApplyAttackMovement();
 
 			inputReset = inputReset || !TeddyInput.Attack;
@@ -57,6 +57,7 @@ namespace Character.Teddy.TeddyFSM
 
 		protected override void OnFixedUpdate()
 		{
+			
 			// if (IsInDealingDmgWindow)
 			// {
 			// 	CharacterTeddy.CharacterMeleeCombat.StartDealingMeleeDmg(DamageEffect);
@@ -69,21 +70,23 @@ namespace Character.Teddy.TeddyFSM
 
 		// protected override void OnExit() => CharacterTeddy.CharacterMeleeCombat.EndDealingMeleeDmg();
 		
-		private void ApplyAttackMovement()
-		{
-			var currentVel = MeleeAttackStateBaseData.MovingCurve.Evaluate(ProgressPercentage) * MeleeAttackStateBaseData.MovingDistance;
-			if (Mathf.Approximately(MeleeAttackStateBaseData.StateDuration, 0f) || Mathf.Approximately(areaUnderCurve, 0f)) 
-				Debug.LogError($"<color=red>DIVIDING BY ZERO DETECTED!!! City evacuation has commenced.</color>");
-			else
-			{
-				currentVel /= MeleeAttackStateBaseData.StateDuration;
-				currentVel /= areaUnderCurve;
-			}
-
-			Teddy.CharacterMovementBase.ForceMoveForward(currentVel * Time.deltaTime);
-			
-			// characterBase.CharacterMovement.ForceXMove(currentVel * (characterBase.FacingRight ? 1f : -1f), MeleeAttackStateBaseData.ApplyInAir);
-			// characterBase.CharacterMovement.StopWalking();
-		}
+		// private void ApplyAttackMovement()
+		// {
+		// 	var currentVel = MeleeAttackStateBaseData.MovingCurve.Evaluate(ProgressPercentage) * MeleeAttackStateBaseData.MovingDistance;
+		// 	if (Mathf.Approximately(MeleeAttackStateBaseData.StateDuration, 0f) || Mathf.Approximately(areaUnderCurve, 0f)) 
+		// 		Debug.LogError($"<color=red>DIVIDING BY ZERO DETECTED!!! City evacuation has commenced.</color>");
+		// 	else
+		// 	{
+		// 		currentVel /= MeleeAttackStateBaseData.StateDuration;
+		// 		currentVel /= areaUnderCurve;
+		// 	}
+		// 	
+		// 	
+		//
+		// 	Teddy.CharacterMovementBase.ForceMoveForward(currentVel * Time.deltaTime);
+		// 	
+		// 	// characterBase.CharacterMovement.ForceXMove(currentVel * (characterBase.FacingRight ? 1f : -1f), MeleeAttackStateBaseData.ApplyInAir);
+		// 	// characterBase.CharacterMovement.StopWalking();
+		// }
 	}
 }

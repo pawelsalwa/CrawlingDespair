@@ -32,20 +32,17 @@ namespace Character.Teddy
 			SetFloat(teddyAnimatorSetup.XVelFloat, velocity.x, teddyAnimatorSetup.MovementDampTime);
 			SetFloat(teddyAnimatorSetup.YVelFloat, velocity.y, teddyAnimatorSetup.MovementDampTime);
 			SetFloat(teddyAnimatorSetup.RunFloat, run ? 1f : 0f, teddyAnimatorSetup.MovementDampTime);
-			
 		}
 
-		public void Attack() => animator.Play(melee1);
-		public void ReturnToDefault()
+		public void Attack() => Transition(melee1);
+		public void ReturnToDefault() => Transition(movement);
+
+		private void Transition(int targetStateHash, float duration = 0.1f, float targetAnimOffset = 0f)
 		{
-			var xd = animator.GetCurrentAnimatorStateInfo(0);
-			Debug.Log($"<color=white>trans dur = {movingTransDur}, normalized time = {xd.normalizedTime}</color>");
-			animator.CrossFade(movement, movingTransDur, 0, xd.normalizedTime);
-			// xd.normalizedTime;
-			// animator.Play(movement, 0, xd.normalizedTime);
+			// var xd = animator.GetCurrentAnimatorStateInfo(0);
+			animator.CrossFade(targetStateHash, duration, 0, targetAnimOffset);//xd.normalizedTime);
 		}
-		// public void Attack() => SetTrigger(teddyAnimatorSetup.Attack);
-		// public void ReturnToDefault() => SetTrigger(teddyAnimatorSetup.ReturnToDefault);
+
 
 		public void SetTrigger(string value) => animator.SetTrigger(value);
 		public void SetFloat(string name, float value) => animator.SetFloat(name, value);

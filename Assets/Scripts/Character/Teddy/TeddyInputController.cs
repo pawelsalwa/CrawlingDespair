@@ -10,7 +10,7 @@ namespace Character.Teddy
 		private TeddyInput teddyInput => CharacterInput as TeddyInput;
 		private InputMapping.PlayerActions PlayerActions => InputMappingWrapper.InputMapping.Player;
 		
-		public TeddyInputController(TeddyInput characterInput, InputMappingWrapper inputMappingWrapper) : base(characterInput)
+		public TeddyInputController(TeddyInput characterInput) : base(characterInput)
 		{
 			// this.inputMappingWrapper = inputMappingWrapper;
 		}

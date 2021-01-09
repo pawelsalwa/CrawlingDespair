@@ -8,15 +8,12 @@ namespace Character
 
 		public CharacterHealth CharacterHealth;
 		[HideInInspector] public CharacterController CharacterController;
-
-		public abstract CharacterMovementBase CharacterMovementBase { get; }
-		protected abstract CharacterStateMachineBase CharacterStateMachineBase { get; }
-		protected abstract CharacterInputBase CharacterInputBase { get; }
-		protected abstract CharacterDataSetupBase CharacterDataSetupBase { get; }
-		protected abstract CharacterPrefabSetupBase CharacterPrefabSetupBase { get; }
-		protected abstract CharacterAnimatorBase CharacterAnimatorBase { get; }
-		protected abstract AnimatorUpdateDataBase AnimatorUpdateDataBase { get; }
-		protected abstract CharacterInputControllerBase CharacterInputControllerBase { get; }
+		
+		public abstract CharacterStateMachineBase CharacterStateMachineBase { get; }
+		public abstract CharacterInputBase CharacterInputBase { get; }
+		public abstract CharacterDataSetupBase CharacterDataSetupBase { get; }
+		public abstract AnimatorUpdateDataBase AnimatorUpdateDataBase { get; }
+		public abstract CharacterInputControllerBase CharacterInputControllerBase { get; }
 
 		public bool IsDestroyed => !CharacterHealth.IsHpAboveZero;
 
@@ -30,12 +27,8 @@ namespace Character
 
 		protected virtual void Update()
 		{
-			CharacterStateMachineBase.debugsEnabled = CharacterPrefabSetupBase.StateMachineDebugs;
-
 			CharacterInputControllerBase.Update();
 			CharacterStateMachineBase.Update();
-			CharacterAnimatorBase.Update(AnimatorUpdateDataBase);
-			CharacterMovementBase.Update();
 		}
 		
 		protected virtual void FixedUpdate()

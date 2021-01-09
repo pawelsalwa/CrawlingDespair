@@ -32,8 +32,6 @@ namespace Dungeon
 
 		public void Start()
 		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
 			GenerateNewCorridor();
 			for (int i = 0; i < 5; i++)
 			{

@@ -64,7 +64,7 @@ MonoBehaviour:
     cameraRotationY: {fileID: 11400000, guid: b3329e767c31ac04780b573e26f159aa, type: 2}
     WalkSpeed: 2.5
     RunSpeed: 4.5
-    TurningFactor: 0.2
+    TurningFactor: 2
   TeddyAnimatorSetup:
     XVelFloat: xVelFloat
     YVelFloat: yVelFloat

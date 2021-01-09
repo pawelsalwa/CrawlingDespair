@@ -28,7 +28,7 @@ public class OrbitCameraInputProvider : MonoBehaviour
 	}
 
 
-	private void LateUpdate()
+	private void Update()
 	{
 		MoveCamera(InputMappingWrapper.InputMapping.Player.Look.ReadValue<Vector2>());
 	}

@@ -12,7 +12,7 @@ namespace Character.Teddy
 
 		protected override void OnUpdate()
 		{
-			Teddy.CharacterMovementBase.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
+			Teddy.Movement.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
 
 			if (TeddyInput.Attack)
 			{

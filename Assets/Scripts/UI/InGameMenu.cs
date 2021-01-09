@@ -32,6 +32,8 @@ namespace UI
 			Cursor.lockState = CursorLockMode.None;
 			canvasGroup.alpha = 1f;
 			canvasGroup.interactable = true;
+			InputMappingWrapper.EnableUiMapping();
+			Cursor.visible = true;
 		}
 		
 		private void UnpauseGame(InputAction.CallbackContext obj)
@@ -40,6 +42,8 @@ namespace UI
 			Cursor.lockState = CursorLockMode.Locked;
 			canvasGroup.alpha = 0f;
 			canvasGroup.interactable = false;
+			InputMappingWrapper.EnablePlayerMapping();
+			Cursor.visible = false;
 		}
 	}
 }

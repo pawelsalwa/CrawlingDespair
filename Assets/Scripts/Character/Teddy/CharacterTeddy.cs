@@ -1,45 +1,52 @@
-﻿using Character;
-using Character.Teddy;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CharacterTeddy : CharacterBase
+namespace Character.Teddy
 {
-	[SerializeField] private TeddyDataSetup teddyDataSetup = null;
-	[SerializeField] private TeddyPrefabSetup teddyPrefabSetup = null;
-
-	private TeddyInput teddyInput;
-	private TeddyStateMachine teddyStateMachine;
-	public TeddyAnimator TeddyAnimator;
-	private TeddyAnimatorUpdateData teddyAnimatorUpdateData;
-	private TeddyInputController teddyInputController;
-	private TeddyMovement teddyMovement;
-
-	public override CharacterMovementBase CharacterMovementBase => teddyMovement;
-
-	protected override CharacterStateMachineBase CharacterStateMachineBase => teddyStateMachine;
-	protected override CharacterInputBase CharacterInputBase => teddyInput;
-	protected override CharacterDataSetupBase CharacterDataSetupBase => teddyDataSetup;
-	protected override CharacterPrefabSetupBase CharacterPrefabSetupBase => teddyPrefabSetup;
-	protected override CharacterAnimatorBase CharacterAnimatorBase => TeddyAnimator;
-	protected override AnimatorUpdateDataBase AnimatorUpdateDataBase => teddyAnimatorUpdateData;
-	protected override CharacterInputControllerBase CharacterInputControllerBase => teddyInputController;
-
-	protected override void Start()
+	public class CharacterTeddy : CharacterBase
 	{
-		base.Start();
+		[SerializeField] private TeddyDataSetup teddyDataSetup = null;
 
-		TeddyAnimator = new TeddyAnimator(teddyPrefabSetup.Animator, teddyDataSetup.TeddyAnimatorSetup);
-		teddyInput = new TeddyInput();
-		teddyStateMachine = new TeddyStateMachine(teddyInput, this, teddyDataSetup.teddyFsmSetup);
+		private TeddyInput teddyInput;
+		private TeddyStateMachine teddyStateMachine;
+		private TeddyAnimatorUpdateData teddyAnimatorUpdateData;
+		private TeddyInputController teddyInputController;
+		public CharacterMovementBase Movement;
 
-		teddyInputController = new TeddyInputController(teddyInput, teddyPrefabSetup.InputMappingWrapper);
+		public TeddyPrefabRefs Refs;
+		public TeddyAnimator TeddyAnimator;
 
-		teddyMovement = new TeddyMovement(CharacterController, teddyDataSetup.MovementSetup);
-	}
+		
+		public override CharacterStateMachineBase CharacterStateMachineBase => teddyStateMachine;
+		public override CharacterInputBase CharacterInputBase => teddyInput;
+		public override CharacterDataSetupBase CharacterDataSetupBase => teddyDataSetup;
+		public override AnimatorUpdateDataBase AnimatorUpdateDataBase => teddyAnimatorUpdateData;
+		public override CharacterInputControllerBase CharacterInputControllerBase => teddyInputController;
 
-	protected override void Update()
-	{
-		teddyAnimatorUpdateData = new TeddyAnimatorUpdateData {velocity = CharacterMovementBase.InternalCharacterVelocity, run = teddyInput.Run};
-		base.Update();
+		protected override void Start()
+		{
+			base.Start();
+
+			Movement = new CharacterMovementBase(CharacterController, teddyDataSetup.MovementSetup);
+			TeddyAnimator = new TeddyAnimator(Refs.animator, teddyDataSetup.TeddyAnimatorSetup);
+			teddyInput = new TeddyInput();
+			teddyStateMachine = new TeddyStateMachine(teddyInput, this, teddyDataSetup.teddyFsmSetup);
+
+			teddyInputController = new TeddyInputController(teddyInput);
+
+			// teddyMovement = new TeddyMovement(CharacterController, teddyDataSetup.MovementSetup);
+		}
+
+		protected override void Update()
+		{
+			base.Update();
+			teddyAnimatorUpdateData = new TeddyAnimatorUpdateData {velocity = Movement.InternalCharacterVelocity, run = teddyInput.Run};
+			TeddyAnimator.Update(teddyAnimatorUpdateData);
+			Movement.Update();
+		}
+
+		public void OnAnimatorMove()
+		{
+			Movement.ForceMovement(Refs.animator.deltaPosition);
+		}
 	}
 }
