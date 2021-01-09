@@ -20,7 +20,7 @@ MonoBehaviour:
       StateDuration: 1
     attackStateSetup:
       HasExitTime: 1
-      StateDuration: 0.65
+      StateDuration: 1
       TransitionToNextComboExitTime: 2
       ComboWindowStart: 0
       ComboWindowEnd: 2

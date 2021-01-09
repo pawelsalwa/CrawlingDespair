@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Character/InputMapping.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Input/InputMapping.inputactions'
 
 using System;
 using System.Collections;
@@ -48,6 +48,22 @@ namespace Input
                     ""name"": ""Run"",
                     ""type"": ""Button"",
                     ""id"": ""0554c15c-696c-480f-ac65-f6dc0a8342ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""7de1d037-0c53-46a9-b237-f0fec5752f54"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""035ce4f3-a8f5-440b-83f9-4b579ec58173"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -284,6 +300,28 @@ namespace Input
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8426f134-ec49-435f-bf9e-83f97bcf68ed"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e5786cb-f0e5-4b55-a6c9-c85a2a9f68ee"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -368,6 +406,14 @@ namespace Input
                     ""type"": ""PassThrough"",
                     ""id"": ""8016fd0a-0c09-4871-972a-bad57543851b"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""028e099d-bbb9-4f62-9096-aa5a3b66c6a2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -790,6 +836,17 @@ namespace Input
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2bceebe-879c-4580-a662-ae50c508d735"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -819,6 +876,8 @@ namespace Input
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+            m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
+            m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -831,6 +890,7 @@ namespace Input
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+            m_UI_Esc = m_UI.FindAction("Esc", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -884,6 +944,8 @@ namespace Input
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Run;
+        private readonly InputAction m_Player_Mouse;
+        private readonly InputAction m_Player_Esc;
         public struct PlayerActions
         {
             private @InputMapping m_Wrapper;
@@ -892,6 +954,8 @@ namespace Input
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Run => m_Wrapper.m_Player_Run;
+            public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
+            public InputAction @Esc => m_Wrapper.m_Player_Esc;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -913,6 +977,12 @@ namespace Input
                     @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                    @Mouse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
+                    @Mouse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
+                    @Mouse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
+                    @Esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                    @Esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                    @Esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -929,6 +999,12 @@ namespace Input
                     @Run.started += instance.OnRun;
                     @Run.performed += instance.OnRun;
                     @Run.canceled += instance.OnRun;
+                    @Mouse.started += instance.OnMouse;
+                    @Mouse.performed += instance.OnMouse;
+                    @Mouse.canceled += instance.OnMouse;
+                    @Esc.started += instance.OnEsc;
+                    @Esc.performed += instance.OnEsc;
+                    @Esc.canceled += instance.OnEsc;
                 }
             }
         }
@@ -947,6 +1023,7 @@ namespace Input
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_TrackedDevicePosition;
         private readonly InputAction m_UI_TrackedDeviceOrientation;
+        private readonly InputAction m_UI_Esc;
         public struct UIActions
         {
             private @InputMapping m_Wrapper;
@@ -961,6 +1038,7 @@ namespace Input
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
             public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+            public InputAction @Esc => m_Wrapper.m_UI_Esc;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1000,6 +1078,9 @@ namespace Input
                     @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                    @Esc.started -= m_Wrapper.m_UIActionsCallbackInterface.OnEsc;
+                    @Esc.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnEsc;
+                    @Esc.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnEsc;
                 }
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1034,6 +1115,9 @@ namespace Input
                     @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                    @Esc.started += instance.OnEsc;
+                    @Esc.performed += instance.OnEsc;
+                    @Esc.canceled += instance.OnEsc;
                 }
             }
         }
@@ -1053,6 +1137,8 @@ namespace Input
             void OnLook(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
+            void OnMouse(InputAction.CallbackContext context);
+            void OnEsc(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
@@ -1066,6 +1152,7 @@ namespace Input
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+            void OnEsc(InputAction.CallbackContext context);
         }
     }
 }

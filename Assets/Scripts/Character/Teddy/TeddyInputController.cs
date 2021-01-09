@@ -6,13 +6,13 @@ namespace Character.Teddy
 {
 	public class TeddyInputController : CharacterInputControllerBase
 	{
-		private readonly InputMappingWrapper inputMappingWrapper;
+		// private readonly InputMappingWrapper inputMappingWrapper;
 		private TeddyInput teddyInput => CharacterInput as TeddyInput;
-		private InputMapping.PlayerActions PlayerActions => inputMappingWrapper.InputMapping.Player;
+		private InputMapping.PlayerActions PlayerActions => InputMappingWrapper.InputMapping.Player;
 		
 		public TeddyInputController(TeddyInput characterInput, InputMappingWrapper inputMappingWrapper) : base(characterInput)
 		{
-			this.inputMappingWrapper = inputMappingWrapper;
+			// this.inputMappingWrapper = inputMappingWrapper;
 		}
 
 		public override void Update()

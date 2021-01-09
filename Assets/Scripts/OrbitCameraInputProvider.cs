@@ -7,7 +7,7 @@ using UnityEngine;
 public class OrbitCameraInputProvider : MonoBehaviour
 {
 	[SerializeField] private CinemachineFreeLook cinemachineFreeLook = null;
-	[SerializeField] private InputMappingWrapper input = null;
+	// [SerializeField] private InputMappingWrapper input = null;
 	[SerializeField] private float speedX = 1f;
 	[SerializeField] private float speedY = 1f;
 
@@ -30,6 +30,6 @@ public class OrbitCameraInputProvider : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		MoveCamera(input.InputMapping.Player.Look.ReadValue<Vector2>());
+		MoveCamera(InputMappingWrapper.InputMapping.Player.Look.ReadValue<Vector2>());
 	}
 }

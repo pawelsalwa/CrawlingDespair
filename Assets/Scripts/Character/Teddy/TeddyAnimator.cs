@@ -11,6 +11,10 @@ namespace Character.Teddy
 		{
 		}
 
+		private static readonly int melee1 = Animator.StringToHash("Melee1");
+		private static readonly int movement = Animator.StringToHash("Movement");
+		public float movingTransDur = 0.1f;
+
 		public override void Update(AnimatorUpdateDataBase animatorUpdateDataBase)
 		{
 			TeddyAnimatorUpdateData teddyAnimatorUpdateData = (TeddyAnimatorUpdateData) animatorUpdateDataBase;
@@ -31,8 +35,17 @@ namespace Character.Teddy
 			
 		}
 
-		public void Attack() => SetTrigger(teddyAnimatorSetup.Attack);
-		public void ReturnToDefault() => SetTrigger(teddyAnimatorSetup.ReturnToDefault);
+		public void Attack() => animator.Play(melee1);
+		public void ReturnToDefault()
+		{
+			var xd = animator.GetCurrentAnimatorStateInfo(0);
+			Debug.Log($"<color=white>trans dur = {movingTransDur}, normalized time = {xd.normalizedTime}</color>");
+			animator.CrossFade(movement, movingTransDur, 0, xd.normalizedTime);
+			// xd.normalizedTime;
+			// animator.Play(movement, 0, xd.normalizedTime);
+		}
+		// public void Attack() => SetTrigger(teddyAnimatorSetup.Attack);
+		// public void ReturnToDefault() => SetTrigger(teddyAnimatorSetup.ReturnToDefault);
 
 		public void SetTrigger(string value) => animator.SetTrigger(value);
 		public void SetFloat(string name, float value) => animator.SetFloat(name, value);
