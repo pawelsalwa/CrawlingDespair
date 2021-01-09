@@ -6,17 +6,18 @@ namespace Character.Teddy
 	public class TeddyStateMachine : CharacterStateMachineBase
 	{
 
-		public override CharacterStateBase DefaultState => MovingState;
+		public override CharacterStateBase DefaultState => Moving;
 		
-		public CharacterStateBase MovingState;
-		public MeleeAttackStateBase MeleeAttackStateBase;
+		public CharacterStateBase Moving;
+		public MeleeAttackStateBase Melee0;
+		public MeleeAttackStateBase Melee1;
 
-		public TeddyStateMachine(TeddyInput input, CharacterTeddy teddy, TeddyStateMachineSetup teddyStateMachineSetup) : base(input, teddy, teddyStateMachineSetup)
+		public TeddyStateMachine(TeddyInput input, CharacterTeddy teddy, TeddyStateMachineSetup fsmSetup) : base(input, teddy, fsmSetup)
 		{
-			MovingState = new MovingState(input,teddy, this, teddyStateMachineSetup.movingStateSetup);
-			MeleeAttackStateBase = new MeleeAttackStateBase(input,teddy, this, teddyStateMachineSetup.attackStateSetup);
-			PerformTransition(MovingState);
+			Moving = new MovingState(input,teddy, this, fsmSetup.moving);
+			Melee0 = new Melee0State(input,teddy, this, fsmSetup.melee0);
+			Melee1 = new MeleeAttackStateBase(input,teddy, this, fsmSetup.melee1);
+			PerformTransition(Moving);
 		}
-
 	}
 }

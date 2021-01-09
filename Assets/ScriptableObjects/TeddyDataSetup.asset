@@ -15,51 +15,25 @@ MonoBehaviour:
   TeddyHealth: {fileID: 11400000, guid: 264468104f7f6b244abfabf974b8793a, type: 2}
   TeddyMaxHealth: {fileID: 11400000, guid: dee9cbbbb550c8b4aa51b9e34c5fcedf, type: 2}
   teddyFsmSetup:
-    movingStateSetup:
+    moving:
       HasExitTime: 0
       StateDuration: 1
-    attackStateSetup:
+    melee0:
       HasExitTime: 1
-      StateDuration: 1
-      TransitionToNextComboExitTime: 2
+      StateDuration: 0.6
+      TransitionToNextComboExitTime: 0.45
       ComboWindowStart: 0
       ComboWindowEnd: 2
       DealDmgWindowStart: 0.15
       DealDmgWindowEnd: 0.35
-      MovingDistance: 0
-      MovingCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.47998905
-          value: 0.0047369003
-          inSlope: -0.0035016623
-          outSlope: -0.0035016623
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.9791565
-          value: -0.002357483
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    melee1:
+      HasExitTime: 1
+      StateDuration: 0.8
+      TransitionToNextComboExitTime: 1
+      ComboWindowStart: 0
+      ComboWindowEnd: 2
+      DealDmgWindowStart: 0.15
+      DealDmgWindowEnd: 0.35
   MovementSetup:
     cameraRotationY: {fileID: 11400000, guid: b3329e767c31ac04780b573e26f159aa, type: 2}
     WalkSpeed: 2.5
@@ -71,4 +45,4 @@ MonoBehaviour:
     RunFloat: runFloat
     Attack: attackTrigger
     ReturnToDefault: returnToDefaultTrigger
-    MovementDampTime: 0.06
+    MovementDampTime: 0.05

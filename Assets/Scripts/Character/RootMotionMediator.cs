@@ -13,7 +13,7 @@ namespace Character
 		
 		private void OnAnimatorMove()
 		{
-			teddy.OnAnimatorMove();
+			// teddy.OnAnimatorMove();
 		}
 	}
 }

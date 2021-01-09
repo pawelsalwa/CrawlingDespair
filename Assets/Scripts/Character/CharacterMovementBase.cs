@@ -61,9 +61,12 @@ namespace Character
 			characterController.Move(new Vector3(movement.x, 0, movement.y));
 		}
 
-		public void ForceMovement(Vector3 animatorDeltaPosition)
+		public void OnAnimatorMove(Vector3 animatorDeltaPosition)
 		{
-			characterController.Move(new Vector3(animatorDeltaPosition.x, 0, animatorDeltaPosition.y));
+			// if (animatorDeltaPosition.x > 0.01f || animatorDeltaPosition.z > 0.01f)
+				// Debug.Log($"<color=white>anim delta pos: x : {animatorDeltaPosition.x}, z: {animatorDeltaPosition.z} </color>");
+			// Vector2 movement = Rotate(new Vector2(animatorDeltaPosition.x, animatorDeltaPosition.z), characterController.transform.eulerAngles.y);
+			characterController.Move(new Vector3(animatorDeltaPosition.x, 0f, animatorDeltaPosition.z));
 		}
 	}
 }

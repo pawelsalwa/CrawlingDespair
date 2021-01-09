@@ -11,6 +11,7 @@ namespace Character.Teddy
 		{
 		}
 
+		private static readonly int melee0 = Animator.StringToHash("Melee0");
 		private static readonly int melee1 = Animator.StringToHash("Melee1");
 		private static readonly int movement = Animator.StringToHash("Movement");
 		public float movingTransDur = 0.1f;
@@ -34,7 +35,8 @@ namespace Character.Teddy
 			SetFloat(teddyAnimatorSetup.RunFloat, run ? 1f : 0f, teddyAnimatorSetup.MovementDampTime);
 		}
 
-		public void Attack() => Transition(melee1);
+		public void Melee0() => Transition(melee0);
+		public void Melee1() => Transition(melee1);
 		public void ReturnToDefault() => Transition(movement);
 
 		private void Transition(int targetStateHash, float duration = 0.1f, float targetAnimOffset = 0f)

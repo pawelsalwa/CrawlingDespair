@@ -29,21 +29,38 @@ namespace UI
 		private void PauseGame(InputAction.CallbackContext obj) 
 		{
 			Time.timeScale = 0f;
-			Cursor.lockState = CursorLockMode.None;
 			canvasGroup.alpha = 1f;
 			canvasGroup.interactable = true;
 			InputMappingWrapper.EnableUiMapping();
+			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 		}
 		
 		private void UnpauseGame(InputAction.CallbackContext obj)
 		{
 			Time.timeScale = 1f;
-			Cursor.lockState = CursorLockMode.Locked;
 			canvasGroup.alpha = 0f;
 			canvasGroup.interactable = false;
 			InputMappingWrapper.EnablePlayerMapping();
+			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
+
+		#if UNITY_EDITOR
+		protected override void Start()
+		{
+			UnityEditor.EditorApplication.playmodeStateChanged += HandleOnPlayModeChanged; // todo wyjevbac to stad
+		}
+
+		private void HandleOnPlayModeChanged()
+		{
+			if (UnityEditor.EditorApplication.isPaused)
+			{
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+			}
+		}
+		#endif
+
 	}
 }

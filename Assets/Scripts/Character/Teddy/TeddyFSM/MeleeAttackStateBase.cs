@@ -1,4 +1,5 @@
-﻿using Character.FSMSetupData;
+﻿using System;
+using Character.FSMSetupData;
 using GameCore.ExtensionMethods;
 using UnityEngine;
 
@@ -29,13 +30,15 @@ namespace Character.Teddy.TeddyFSM
 			fixedStateProgress > MeleeAttackStateBaseData.DealDmgWindowStart &&
 			fixedStateProgress < MeleeAttackStateBaseData.DealDmgWindowEnd;
 
-		private float areaUnderCurve = 0f;
+		// private float areaUnderCurve = 0f;
+
+		protected virtual Action AnimCallback => Teddy.TeddyAnimator.Melee1;
 
 		protected override void OnEnter()
 		{
-			Teddy.TeddyAnimator.Attack();
+			AnimCallback();
 			comboActivated = inputReset = false;
-			areaUnderCurve = MeleeAttackStateBaseData.MovingCurve.IntegrateCurve(0f, 1f, 20);
+			// areaUnderCurve = MeleeAttackStateBaseData.MovingCurve.IntegrateCurve(0f, 1f, 20);
 		}
 
 		protected override void OnUpdate()

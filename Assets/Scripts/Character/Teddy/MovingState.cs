@@ -16,7 +16,7 @@ namespace Character.Teddy
 
 			if (TeddyInput.Attack)
 			{
-				RequestTransition(TeddyStateMachine.MeleeAttackStateBase);
+				RequestTransition(TeddyStateMachine.Melee0);
 				return;
 			}
 		}

@@ -46,7 +46,7 @@ namespace Character.Teddy
 
 		public void OnAnimatorMove()
 		{
-			Movement.ForceMovement(Refs.animator.deltaPosition);
+			Movement.OnAnimatorMove(Refs.animator.deltaPosition);
 		}
 	}
 }
