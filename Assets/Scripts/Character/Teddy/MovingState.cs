@@ -4,7 +4,7 @@ namespace Character.Teddy
 {
 	public class MovingState : TeddyStateBase
 	{
-		public MovingState(TeddyInput input, CharacterTeddy teddy, TeddyStateMachine teddyStateMachine, StateSetupBase stateSetupBase) : base(input, teddy, teddyStateMachine, stateSetupBase)
+		public MovingState(CharacterTeddy teddy, TeddyFsm fsm, StateSetupBase stateSetupBase) : base(teddy, fsm, stateSetupBase)
 		{
 		}
 
@@ -12,11 +12,17 @@ namespace Character.Teddy
 
 		protected override void OnUpdate()
 		{
-			Teddy.Movement.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
+			Teddy.Movement.MoveByInput(input.Movement, input.Run);
 
-			if (TeddyInput.Attack)
+			if (input.Attack)
 			{
-				RequestTransition(TeddyStateMachine.Melee0);
+				RequestTransition(TeddyFsm.Melee0);
+				return;
+			}
+
+			if (input.Dodge)
+			{
+				RequestTransition(TeddyFsm.Dodge);
 				return;
 			}
 		}

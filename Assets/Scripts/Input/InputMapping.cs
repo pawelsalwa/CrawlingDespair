@@ -45,6 +45,14 @@ namespace Input
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""574ab345-1d83-4d02-9ee9-43b1eb19799b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Run"",
                     ""type"": ""Button"",
                     ""id"": ""0554c15c-696c-480f-ac65-f6dc0a8342ed"",
@@ -320,6 +328,17 @@ namespace Input
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33fae17e-06a8-493d-b39d-9897df2bfd6c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -875,6 +894,7 @@ namespace Input
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+            m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
             m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
             m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
@@ -943,6 +963,7 @@ namespace Input
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Fire;
+        private readonly InputAction m_Player_Dodge;
         private readonly InputAction m_Player_Run;
         private readonly InputAction m_Player_Mouse;
         private readonly InputAction m_Player_Esc;
@@ -953,6 +974,7 @@ namespace Input
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
+            public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
             public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
             public InputAction @Esc => m_Wrapper.m_Player_Esc;
@@ -974,6 +996,9 @@ namespace Input
                     @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                     @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                    @Dodge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
+                    @Dodge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
+                    @Dodge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                     @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                     @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
@@ -996,6 +1021,9 @@ namespace Input
                     @Fire.started += instance.OnFire;
                     @Fire.performed += instance.OnFire;
                     @Fire.canceled += instance.OnFire;
+                    @Dodge.started += instance.OnDodge;
+                    @Dodge.performed += instance.OnDodge;
+                    @Dodge.canceled += instance.OnDodge;
                     @Run.started += instance.OnRun;
                     @Run.performed += instance.OnRun;
                     @Run.canceled += instance.OnRun;
@@ -1136,6 +1164,7 @@ namespace Input
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
+            void OnDodge(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
             void OnMouse(InputAction.CallbackContext context);
             void OnEsc(InputAction.CallbackContext context);

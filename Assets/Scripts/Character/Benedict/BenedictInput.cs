@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Character.Benedict
 {
-	public class BenedictInput : CharacterInputBase
+	public class BenedictInput : Input
 	{
 		public Vector2 Movement;
 		public Vector2 RightAnalogDirection;

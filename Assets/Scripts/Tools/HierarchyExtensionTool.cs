@@ -67,7 +67,7 @@ namespace Tools
 
 			colorThis = !colorThis;
 			var xd = new Texture2D(1, 1);
-			xd.SetPixel(0, 0, new Color(colorThis ? 0f : 0f, selectionrect.yMin / Screen.height, 1f - selectionrect.yMin / Screen.height, colorThis ? 0.09f : 0.04f));
+			xd.SetPixel(0, 0, new Color(colorThis ? 0f : 0f, selectionrect.yMin / Screen.height, 1f - selectionrect.yMin / Screen.height, colorThis ? 0.13f : 0.03f));
 			xd.Apply();
 			var boxRect = new Rect {xMin = Screen.safeArea.xMin + 32f, xMax = Screen.width, yMin = selectionrect.yMin, yMax = selectionrect.yMax};
 			GUI.Box(boxRect, xd, new GUIStyle {normal = {background = xd}});

@@ -4,22 +4,23 @@ using UnityEngine.InputSystem;
 
 namespace Character.Teddy
 {
-	public class TeddyInputController : CharacterInputControllerBase
+	public class TeddyInputController
 	{
-		// private readonly InputMappingWrapper inputMappingWrapper;
-		private TeddyInput teddyInput => CharacterInput as TeddyInput;
+		private readonly Input input;
+
 		private InputMapping.PlayerActions PlayerActions => InputMappingWrapper.InputMapping.Player;
 		
-		public TeddyInputController(TeddyInput characterInput) : base(characterInput)
+		public TeddyInputController(Input input)
 		{
-			// this.inputMappingWrapper = inputMappingWrapper;
+			this.input = input;
 		}
 
-		public override void Update()
+		public void Update()
 		{
-			teddyInput.Movement = PlayerActions.Move.ReadValue<Vector2>();
-			teddyInput.Attack = PlayerActions.Fire.triggered;
-			teddyInput.Run = PlayerActions.Run.phase == InputActionPhase.Started;
+			input.Movement = PlayerActions.Move.ReadValue<Vector2>();
+			input.Attack = PlayerActions.Fire.triggered;
+			input.Dodge = PlayerActions.Dodge.triggered;
+			input.Run = PlayerActions.Run.phase == InputActionPhase.Started;
 		}
 	}
 }

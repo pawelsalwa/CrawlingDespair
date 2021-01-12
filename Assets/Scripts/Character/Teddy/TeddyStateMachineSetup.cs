@@ -8,7 +8,8 @@ namespace Character.Teddy
 	[Serializable]
 	public class TeddyStateMachineSetup : CharacterFSMSetupBase
 	{
-		[FormerlySerializedAs("movingStateSetup")] public StateSetupBase moving;
+		public StateSetupBase moving;
+		public DodgeStateSetup dodge;
 		public MeleeAttackStateBaseSetup melee0;
 		public MeleeAttackStateBaseSetup melee1;
 	}

@@ -12,37 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdd7474233648d0831950eb155f4056, type: 3}
   m_Name: TeddyDataSetup
   m_EditorClassIdentifier: 
-  TeddyHealth: {fileID: 11400000, guid: 264468104f7f6b244abfabf974b8793a, type: 2}
-  TeddyMaxHealth: {fileID: 11400000, guid: dee9cbbbb550c8b4aa51b9e34c5fcedf, type: 2}
+  MovementSetup:
+    WalkSpeed: 2.5
+    RunSpeed: 4.5
+    TurningFactor: 6
   teddyFsmSetup:
     moving:
       HasExitTime: 0
-      StateDuration: 1
+      StateDuration: 3
+    dodge:
+      HasExitTime: 1
+      StateDuration: 0.45
+      EnableAttackTreshold: 0.2
     melee0:
       HasExitTime: 1
-      StateDuration: 0.6
-      TransitionToNextComboExitTime: 0.45
-      ComboWindowStart: 0
+      StateDuration: 0.76
+      TransitionToNextComboExitTime: 0.55
+      ComboWindowStart: 0.25
       ComboWindowEnd: 2
       DealDmgWindowStart: 0.15
       DealDmgWindowEnd: 0.35
+      TrailStart: 0.23
+      TrailEnd: 0.35
     melee1:
       HasExitTime: 1
-      StateDuration: 0.8
+      StateDuration: 0.9
       TransitionToNextComboExitTime: 1
       ComboWindowStart: 0
       ComboWindowEnd: 2
       DealDmgWindowStart: 0.15
       DealDmgWindowEnd: 0.35
-  MovementSetup:
-    cameraRotationY: {fileID: 11400000, guid: b3329e767c31ac04780b573e26f159aa, type: 2}
-    WalkSpeed: 2.5
-    RunSpeed: 4.5
-    TurningFactor: 2
+      TrailStart: 0.25
+      TrailEnd: 0.4
   TeddyAnimatorSetup:
-    XVelFloat: xVelFloat
-    YVelFloat: yVelFloat
-    RunFloat: runFloat
-    Attack: attackTrigger
-    ReturnToDefault: returnToDefaultTrigger
     MovementDampTime: 0.05
+    melee1Offset: 0.1
+    dodgeOffset: 0.2
+    MovingTransDur: 0.3

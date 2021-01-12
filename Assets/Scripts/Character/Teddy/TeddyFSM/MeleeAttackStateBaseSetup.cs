@@ -14,5 +14,7 @@ namespace Character.Teddy.TeddyFSM
 		public float DealDmgWindowEnd  = 0.35f;
 		// public float MovingDistance = 0.5f;
 		// public AnimationCurve MovingCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+		public float TrailStart = 0.1f;
+		public float TrailEnd = 0.4f;
 	}
 }

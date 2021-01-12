@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Character.Benedict
 {
-	public class BenedictInputController : CharacterInputControllerBase
+	public class BenedictInputController //: CharacterInputControllerBase
 	{
 		// private InputMapping.BenedictControllActions benedictActions;
 		//
@@ -16,12 +16,12 @@ namespace Character.Benedict
 		// 	this.benedictActions = inputMappingWrapper.InputMapping.BenedictControll;
 		// }
 		//
-		public BenedictInputController(CharacterInputBase characterInput) : base(characterInput)
-		{
-		}
-		public override void Update()
-		{
-		} //gathers input each frame for further processing}
+		// public BenedictInputController(Input input) : base(input)
+		// {
+		// }
+		// public override void Update()
+		// {
+		// } //gathers input each frame for further processing}
 		// {
 		// 	BenedictInput.Movement = benedictActions.xMove.ReadValue<Vector2>();
 		// 	BenedictInput.RightAnalogDirection = benedictActions.AimDirection.ReadValue<Vector2>();

@@ -69,7 +69,7 @@ namespace ExtensionMethods
 				case WorldDirection.East: return WorldDirection.South;
 			}
 
-			return WorldDirection.East;
+			return default;
 		}
 	}
 }

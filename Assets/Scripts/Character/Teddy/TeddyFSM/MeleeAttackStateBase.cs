@@ -1,14 +1,12 @@
 ﻿using System;
-using Character.FSMSetupData;
-using GameCore.ExtensionMethods;
-using UnityEngine;
 
 namespace Character.Teddy.TeddyFSM
 {
 	public class MeleeAttackStateBase : TeddyStateBase
 	{
-		public MeleeAttackStateBase(TeddyInput input, CharacterTeddy teddy, TeddyStateMachine teddyStateMachine, MeleeAttackStateBaseSetup stateSetupBase) : base(input, teddy, teddyStateMachine, stateSetupBase)
+		public MeleeAttackStateBase(CharacterTeddy teddy, TeddyFsm fsm, MeleeAttackStateBaseSetup stateSetupBase) : base(teddy, fsm, stateSetupBase)
 		{
+			
 		}
 		
 		protected MeleeAttackStateBaseSetup MeleeAttackStateBaseData => stateSetupBase as MeleeAttackStateBaseSetup;
@@ -46,9 +44,9 @@ namespace Character.Teddy.TeddyFSM
 			// Teddy.CharacterMovementBase.MoveByInput(TeddyInput.Movement, TeddyInput.Run);
 			//ApplyAttackMovement();
 
-			inputReset = inputReset || !TeddyInput.Attack;
+			inputReset = inputReset || !input.Attack;
 
-			if (TeddyInput.Attack && IsInComboWindow && inputReset)
+			if (input.Attack && IsInComboWindow && inputReset)
 				comboActivated = true;
 
 			if (ShouldTransitionToNextCombo && NextMeleeAttackComboState != null)
@@ -56,6 +54,13 @@ namespace Character.Teddy.TeddyFSM
 				RequestTransition(NextMeleeAttackComboState);
 				return;
 			}
+
+			UpdateTrail();
+		}
+
+		private void UpdateTrail()
+		{
+			Teddy.Refs.Trail.SetActive(stateProgress >= MeleeAttackStateBaseData.TrailStart && stateProgress <= MeleeAttackStateBaseData.TrailEnd);
 		}
 
 		protected override void OnFixedUpdate()

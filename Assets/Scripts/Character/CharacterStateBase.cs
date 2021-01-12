@@ -7,8 +7,8 @@ namespace Character
 	/// <summary>
 	/// Base class for FSM states. Inherit constructor to setup proper implementations of:
 	/// <see cref="CharacterBase"/>
-	/// <see cref="CharacterInputBase"/>
-	/// <see cref="CharacterStateMachineBase"/>
+	/// <see cref="Input"/>
+	/// <see cref="Fsm"/>
 	/// </summary>
 	[Serializable]
 	public abstract class CharacterStateBase
@@ -16,22 +16,22 @@ namespace Character
 		public string TypeName => GetType().Name;
 		
 		protected readonly CharacterBase characterBase;
-		protected readonly CharacterInputBase characterInput;
-		protected readonly CharacterStateMachineBase stateMachine;
 		protected readonly StateSetupBase stateSetupBase;
+		protected readonly Fsm fsm;
+		protected readonly Input input;
 
 		protected float stateProgress = 0f;
 		protected float fixedStateProgress = 0f;
 
-		protected CharacterStateBase(CharacterInputBase characterInput, CharacterBase characterBase, CharacterStateMachineBase stateMachine, StateSetupBase stateSetupBase)
+		protected CharacterStateBase(CharacterBase characterBase, Fsm fsm, StateSetupBase stateSetupBase)
 		{
-			this.characterInput = characterInput;
 			this.characterBase = characterBase;
-			this.stateMachine = stateMachine;
 			this.stateSetupBase = stateSetupBase;
+			this.fsm = fsm;
+			input = characterBase.Input;
 		}
 
-		protected virtual CharacterStateBase DefaultNextState => stateMachine.DefaultState;
+		protected virtual CharacterStateBase DefaultNextState => fsm.DefaultState;
 		protected virtual float StateDuration => stateSetupBase.StateDuration;
 		protected float ProgressPercentage => stateProgress / stateSetupBase.StateDuration;
 
@@ -81,7 +81,7 @@ namespace Character
 
 		protected void RequestTransition(CharacterStateBase targetState)
 		{
-			stateMachine.PerformTransition(targetState);
+			fsm.PerformTransition(targetState);
 		}
 	}
 }

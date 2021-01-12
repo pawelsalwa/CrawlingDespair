@@ -30,6 +30,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "574ab345-1d83-4d02-9ee9-43b1eb19799b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Run",
                     "type": "Button",
                     "id": "0554c15c-696c-480f-ac65-f6dc0a8342ed",
@@ -305,6 +313,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33fae17e-06a8-493d-b39d-9897df2bfd6c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

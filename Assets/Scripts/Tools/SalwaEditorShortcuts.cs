@@ -1,9 +1,9 @@
+#if UNITY_EDITOR
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
-#if UNITY_EDITOR
 namespace Tools
 {
 	public static class SalwaEditorShortcuts

@@ -6,7 +6,9 @@ namespace Character.Teddy
 	[Serializable]
 	public class TeddyPrefabRefs
 	{
-		public Animator animator;
 		public bool StateMachineDebugs = false;
+		public GameObject Trail;
+		public bool overrideInput = false;
+		public Input DebugInput;
 	}
 }

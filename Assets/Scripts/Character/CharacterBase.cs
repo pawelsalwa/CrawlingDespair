@@ -1,39 +1,38 @@
-﻿using Character.Teddy;
+﻿using GameCore;
 using UnityEngine;
 
 namespace Character
 {
-	public abstract class CharacterBase : MonoBehaviour, IDamagable
+	[RequireComponent(typeof(CharacterController))]
+	[RequireComponent(typeof(Animator))]
+	public abstract class CharacterBase : MonoBehaviour
 	{
-
-		public CharacterHealth CharacterHealth;
-		[HideInInspector] public CharacterController CharacterController;
-		
-		public abstract CharacterStateMachineBase CharacterStateMachineBase { get; }
-		public abstract CharacterInputBase CharacterInputBase { get; }
-		public abstract CharacterDataSetupBase CharacterDataSetupBase { get; }
-		public abstract AnimatorUpdateDataBase AnimatorUpdateDataBase { get; }
-		public abstract CharacterInputControllerBase CharacterInputControllerBase { get; }
-
-		public bool IsDestroyed => !CharacterHealth.IsHpAboveZero;
-
-		public void TakeDamage(DamageData damageData) => CharacterHealth.TakeDamage(damageData);
+		public CharacterMovementBase Movement;
+		public Fsm Fsm;
+		[HideInInspector] public Input Input;
+		[Inspectable] public CharacterSetup Setup;
+		[HideInInspector]public Animator Animator;
 
 		protected virtual void Start()
 		{
-			CharacterController = GetComponent<CharacterController>();
-			CharacterHealth = new CharacterHealth(CharacterDataSetupBase.TeddyMaxHealth, CharacterDataSetupBase.TeddyHealth);
+			Animator = GetComponent<Animator>();
+			Movement = new CharacterMovementBase(GetComponent<CharacterController>(), Setup.MovementSetup);
 		}
 
 		protected virtual void Update()
 		{
-			CharacterInputControllerBase.Update();
-			CharacterStateMachineBase.Update();
+			Fsm?.Update();
+			Movement.Update();
 		}
 		
 		protected virtual void FixedUpdate()
 		{
-			CharacterStateMachineBase.FixedUpdate();
+			Fsm.FixedUpdate();
+		}
+
+		private void OnAnimatorMove()
+		{
+			Movement.OnAnimatorMove(Animator.deltaPosition);
 		}
 	}
 }
