@@ -1,31 +1,31 @@
-using Character.FSMSetupData;
 using Character.Teddy;
 using UnityEngine;
 
 namespace Character
 {
-	public abstract class Fsm
+	public class Fsm
 	{
-		private readonly Input input;
-		private readonly CharacterBase characterBase;
-		private readonly CharacterFSMSetupBase characterFsmSetupBase;
+		public readonly Pawn Pawn;
 
-		private CharacterStateBase currentState;
+		private State currentState;
 
-		public string CurrentStateDebug => currentState.TypeName;
-		public abstract CharacterStateBase DefaultState { get; }
-
-		protected Fsm(CharacterBase characterBase, CharacterFSMSetupBase characterFsmSetupBase)
+		public Fsm(Pawn pawn, FsmSetup setupFsmSetup)
 		{
-			this.characterBase = characterBase;
-			this.characterFsmSetupBase = characterFsmSetupBase;
-			input = characterBase.Input;
+			Pawn = pawn;
+			
+			
 		}
 
-		public void PerformTransition(CharacterStateBase targetState)
+		public State DefaultState => Move;
+		
+		public State Attack0; 
+		public State Attack1; 
+		public State Dodge; 
+		public State Move;
+
+		public void PerformTransition(State targetState)
 		{
-			if (characterBase is CharacterTeddy teddy && teddy.Refs.StateMachineDebugs)
-				Debug.Log($"<color=cyan> <StateMachine> Transition from: <b>{currentState?.TypeName}</b> to: <b>{targetState?.TypeName}</b> </color>");
+			if (Pawn.Refs.FsmDebugs) Debug.Log($"<color=cyan> <StateMachine> Transition from: <b>{currentState?.TypeName}</b> to: <b>{targetState?.TypeName}</b> </color>");
 			currentState?.Exit();
 			currentState = targetState;
 			currentState.Enter();

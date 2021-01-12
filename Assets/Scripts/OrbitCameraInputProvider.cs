@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Character.Teddy;
-using Cinemachine;
+﻿using Cinemachine;
+using Input;
 using UnityEngine;
 
 public class OrbitCameraInputProvider : MonoBehaviour

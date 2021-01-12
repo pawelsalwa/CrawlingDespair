@@ -8,7 +8,7 @@ public class TransparentWallsRaycasting : MonoBehaviour {
 
 	public List<MeshRenderer> transparentRenderers = new List<MeshRenderer>();
 
-	public CharacterTeddy teddy;
+	public PawnTeddy teddy;
 	public LayerMask layerMaskEnviro;
 	
 	public Renderer wallsRenderer;
