@@ -7,7 +7,7 @@ namespace Pawn
 	public class Refs
 	{
 		public bool FsmDebugs = false;
-		public GameObject Trail;
+		public TrailRenderer Trail;
 		public bool overrideInput = false;
 		public Input DebugInput;
 	}

@@ -9,12 +9,18 @@ namespace Pawn.States
 		}
 
 		protected override Action AnimCall => pawn.Animator.ToMoving;
-		
+
 		protected override void OnUpdate()
 		{
 			if (input.Attack)
 			{
 				RequestTransition(fsm.Attack0);
+				return;
+			}
+
+			if (input.Dodge)
+			{
+				RequestTransition(fsm.Dodge);
 				return;
 			}
 		}

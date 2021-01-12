@@ -18,7 +18,7 @@ MonoBehaviour:
       ExitTime: 1
     dodge:
       HasExitTime: 1
-      ExitTime: 1
+      ExitTime: 0.3
       EnableAttackTreshold: 0.2
     attack0:
       HasExitTime: 1

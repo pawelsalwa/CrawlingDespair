@@ -5,9 +5,9 @@ namespace Pawn
 {
 	[RequireComponent(typeof(CharacterController))]
 	[RequireComponent(typeof(Animator))]
-	public abstract class Pawn : MonoBehaviour
+	public class Pawn : MonoBehaviour
 	{
-		public PawnMovementBase Movement;
+		public Movement Movement;
 		public Fsm Fsm;
 		[HideInInspector] public Input Input;
 		[Inspectable, SerializeField] private PawnSetup setup;
@@ -15,41 +15,40 @@ namespace Pawn
 		public Refs Refs;
 		
 		private Animator animatorComponent;
+		public Controller Controller { private get; set; }
 
-		protected virtual void Start()
+		private void Start()
 		{
 			animatorComponent = GetComponent<Animator>();
-			Movement = new PawnMovementBase(GetComponent<CharacterController>(), setup.Movement);
+			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
 			Animator = new PawnAnimator(animatorComponent, setup.Animator);
 			Fsm = new Fsm(this, setup.Fsm);
 		}
 
-		protected virtual void Update()
+		private void Update()
 		{
+			if (Controller && !Refs.overrideInput) Controller.UpdateInput(Input);
 			Fsm?.Update();
 			Movement.Update();
 			Animator.Update(Movement.InternalCharacterVelocity, Input.Run);
 		}
 		
-		protected virtual void FixedUpdate()
+		private void FixedUpdate()
 		{
 			Fsm?.FixedUpdate();
 		}
 
-		private void OnValidate()
+		private void OnValidate() => DebugOverrideInput();
+
+		private void DebugOverrideInput()
 		{
-			if (Refs.overrideInput)
-			{
-				Input.Attack = Refs.DebugInput.Attack;
-				Input.Dodge = Refs.DebugInput.Dodge;
-				Input.Run = Refs.DebugInput.Run;
-				Input.Movement = Refs.DebugInput.Movement;
-			} 
+			if (!Refs.overrideInput) return;
+			Input.Attack = Refs.DebugInput.Attack;
+			Input.Dodge = Refs.DebugInput.Dodge;
+			Input.Run = Refs.DebugInput.Run;
+			Input.Movement = Refs.DebugInput.Movement;
 		}
 
-		private void OnAnimatorMove()
-		{
-			Movement.OnAnimatorMove(animatorComponent.deltaPosition);
-		}
+		private void OnAnimatorMove() => Movement.OnAnimatorMove(animatorComponent.deltaPosition);
 	}
 }

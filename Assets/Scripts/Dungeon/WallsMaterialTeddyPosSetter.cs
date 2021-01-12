@@ -1,12 +1,11 @@
-﻿using System;
-using Pawn.Teddy;
+﻿
 using UnityEngine;
 
 namespace Dungeon
 {
 	public class WallsMaterialTeddyPosSetter : MonoBehaviour
 	{
-		public PawnTeddy teddy;
+		public Pawn.Pawn teddy;
 		public Material[] wallsMaterials;
 
 		public void Update()

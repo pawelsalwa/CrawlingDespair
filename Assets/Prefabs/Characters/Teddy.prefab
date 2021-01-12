@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a307ed1263fe4e0ea04d067e97a11be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teddy: {fileID: 5030564058606742814}
+  teddy: {fileID: 3509738920902724646}
   wallsMaterials:
   - {fileID: 2100000, guid: 770d874acb2e37f4dbb0943d5ef8a660, type: 2}
   - {fileID: 2100000, guid: 2e701f9d6b8aa304c93f2af59c1ee5d9, type: 2}
@@ -1354,7 +1354,8 @@ GameObject:
   - component: {fileID: 6586711357877918896}
   - component: {fileID: 3882860256183497162}
   - component: {fileID: 8419877943398129485}
-  - component: {fileID: 5030564058606742814}
+  - component: {fileID: 3509738920902724646}
+  - component: {fileID: 5577611825094745727}
   m_Layer: 0
   m_Name: Teddy
   m_TagString: Untagged
@@ -1417,7 +1418,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.1, z: 0}
---- !u!114 &5030564058606742814
+--- !u!114 &3509738920902724646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1426,25 +1427,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 7868891144091791011}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ea36d7b034d564fac0bcff0021990b, type: 3}
+  m_Script: {fileID: 11500000, guid: f1d1d9adf1863034db2e77b5e9689ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Input:
-    Movement: {x: 0.15, y: 0}
+    Movement: {x: 0, y: 0}
     Attack: 0
     Dodge: 0
     Run: 0
-  Setup: {fileID: 11400000, guid: caec3e3feeb56694c86f19a3ade384d2, type: 2}
-  Animator: {fileID: 0}
+  setup: {fileID: 11400000, guid: a997e53436e007f4ea859558112f1db8, type: 2}
   Refs:
-    StateMachineDebugs: 0
-    Trail: {fileID: 1695924798868505322}
+    FsmDebugs: 0
+    Trail: {fileID: 8993706776918754754}
     overrideInput: 0
     DebugInput:
       Movement: {x: 0, y: 0}
       Attack: 0
       Dodge: 0
       Run: 0
+--- !u!114 &5577611825094745727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868891144091791011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34638993b4594fc39f97bb6076c922e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8008782661409709082
 GameObject:
   m_ObjectHideFlags: 0

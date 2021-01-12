@@ -11,7 +11,7 @@ namespace Pawn
 	[Serializable]
 	public class StateSetup
 	{
-		public bool HasExitTime = false;
+		public bool HasExitTime = true;
 		// [DrawIf("HasExitTime")] 
 		public float ExitTime = 1f;
 	}

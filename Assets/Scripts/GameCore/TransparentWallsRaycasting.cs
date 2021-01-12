@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Pawn.Teddy;
 using UnityEngine;
 
 public class TransparentWallsRaycasting : MonoBehaviour {
 
 	public List<MeshRenderer> transparentRenderers = new List<MeshRenderer>();
 
-	public PawnTeddy teddy;
+	public Pawn.Pawn teddy;
 	public LayerMask layerMaskEnviro;
 	
 	public Renderer wallsRenderer;
