@@ -1,18 +1,22 @@
-﻿namespace Pawn.Teddy
+﻿using System;
+
+namespace Pawn.Teddy
 {
 	public class PawnTeddy : Pawn
 	{
-		private TeddyInputController teddyInputController;
+		public static event Action<PawnTeddy> OnSpawned;
+		
+		private InputController inputController;
 
 		protected override void Start()
 		{
 			base.Start();
-			teddyInputController = new TeddyInputController(Input);
+			inputController = new InputController(Input);
 		}
 
 		protected override void Update()
 		{
-			teddyInputController.Update();
+			inputController.Update();
 			base.Update();
 		}
 	}

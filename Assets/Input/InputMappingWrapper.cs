@@ -10,9 +10,10 @@ namespace Input
 
 		public static InputMapping InputMapping { get; private set; }
 
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
 		private static void InitInput()
 		{
+			Debug.Log($"<color=white>input inited</color>");
 			InputMapping = new InputMapping();
 			InputMapping.Player.Enable();
 			InputMapping.UI.Disable();

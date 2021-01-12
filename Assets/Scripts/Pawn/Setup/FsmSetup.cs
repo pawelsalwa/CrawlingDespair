@@ -1,14 +1,13 @@
 ﻿using System;
-using Character.States;
 
-namespace Pawn
+namespace Pawn.Setup
 {
 	[Serializable]
 	public class FsmSetup
 	{
 		public StateSetup moving;
-		public DodgeStateSetup dodge;
-		public MeleeStateSetup melee0;
-		public MeleeStateSetup melee1;
+		public DodgeSetup dodge;
+		public AttackSetup attack0;
+		public AttackSetup attack1;
 	}
 }

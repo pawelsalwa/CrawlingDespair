@@ -1,10 +1,9 @@
 ﻿using System;
-using Pawn;
 
-namespace Character.States
+namespace Pawn.Setup
 {
 	[Serializable]
-	public class MeleeStateSetup : StateSetup
+	public class AttackSetup : StateSetup
 	{
 		public float TransitionToNextComboExitTime = 1f;
 		public float ComboWindowStart = 0;

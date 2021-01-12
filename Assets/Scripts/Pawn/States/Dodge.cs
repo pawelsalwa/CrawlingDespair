@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Pawn.States
 {
-	public class DodgeState : State
+	public class Dodge : State
 	{
-		private DodgeStateSetup DodgeStateSetup => stateSetup as DodgeStateSetup;
+		private DodgeSetup DodgeSetup => setup as DodgeSetup;
 		
-		public DodgeState(Fsm fsm, DodgeStateSetup stateSetup) : base( fsm, stateSetup)
+		public Dodge(Fsm fsm, DodgeSetup setup) : base( fsm, setup)
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace Pawn.States
 
 		protected override void OnUpdate()
 		{
-			if (input.Attack && stateProgress >= DodgeStateSetup.EnableAttackTreshold)
+			if (input.Attack && stateProgress >= DodgeSetup.EnableAttackTreshold)
 			{
 				RequestTransition(fsm.Attack0);
 				return;

@@ -1,14 +1,14 @@
 ﻿using System;
-using Character.States;
+using Pawn.Setup;
 
 namespace Pawn.States
 {
-	public class AttackState : State
+	public class AttackBase : State
 	{
-		public AttackState( Fsm fsm, MeleeStateSetup setup) : base( fsm, setup)
+		public AttackBase( Fsm fsm, AttackSetup setup) : base( fsm, setup)
 		{ }
 		
-		protected MeleeStateSetup MeleeStateData => stateSetup as MeleeStateSetup;
+		protected AttackSetup setup => base.setup as AttackSetup;
 
 		/// <summary> Derived states should implement this if they have next combo part. If it's null, that means there's no combo. </summary>
 		protected virtual State NextComboState => null;
@@ -17,15 +17,15 @@ namespace Pawn.States
 		private bool inputReset = false;
 
 		private bool ShouldTransitionToNextCombo =>
-			stateProgress > MeleeStateData.TransitionToNextComboExitTime && comboActivated;
+			stateProgress > setup.TransitionToNextComboExitTime && comboActivated;
 
 		private bool IsInComboWindow =>
-			stateProgress > MeleeStateData.ComboWindowStart &&
-			stateProgress < MeleeStateData.ComboWindowEnd;
+			stateProgress > setup.ComboWindowStart &&
+			stateProgress < setup.ComboWindowEnd;
 
 		protected bool IsInDealingDmgWindow =>
-			fixedStateProgress > MeleeStateData.DealDmgWindowStart &&
-			fixedStateProgress < MeleeStateData.DealDmgWindowEnd;
+			fixedStateProgress > setup.DealDmgWindowStart &&
+			fixedStateProgress < setup.DealDmgWindowEnd;
 
 		protected override Action AnimCall => pawn.Animator.Melee0;
 

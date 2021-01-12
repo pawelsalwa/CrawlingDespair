@@ -1,16 +1,17 @@
 ﻿using Input;
+using Pawn.Teddy;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Pawn.Teddy
+namespace Pawn
 {
-	public class TeddyInputController
+	public class InputController
 	{
 		private readonly Input input;
 
 		private InputMapping.PlayerActions PlayerActions => InputMappingWrapper.InputMapping.Player;
 		
-		public TeddyInputController(Input input)
+		public InputController(Input input)
 		{
 			this.input = input;
 		}

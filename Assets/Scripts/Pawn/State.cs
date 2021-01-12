@@ -8,24 +8,24 @@ namespace Pawn
 		public string TypeName => GetType().Name;
 		
 		protected readonly Pawn pawn;
-		protected readonly StateSetup stateSetup;
+		protected readonly StateSetup setup;
 		protected readonly Fsm fsm;
 		protected readonly Input input;
 
 		protected float stateProgress = 0f;
 		protected float fixedStateProgress = 0f;
 
-		protected State(Fsm fsm, StateSetup stateSetup)
+		protected State(Fsm fsm, StateSetup setup)
 		{
-			this.stateSetup = stateSetup;
+			this.setup = setup;
 			this.fsm = fsm;
 			pawn = fsm.Pawn;
 			input = pawn.Input;
 		}
 
 		protected virtual State DefaultNextState => fsm.DefaultState;
-		protected virtual float StateDuration => stateSetup.ExitTime;
-		protected float ProgressPercentage => stateProgress / stateSetup.ExitTime;
+		protected virtual float StateDuration => setup.ExitTime;
+		protected float ProgressPercentage => stateProgress / setup.ExitTime;
 
 		protected abstract Action AnimCall { get; }
 
@@ -44,7 +44,7 @@ namespace Pawn
 		{
 			OnUpdate();
 			
-			if ((stateProgress += Time.deltaTime) >= StateDuration && stateSetup.HasExitTime)
+			if ((stateProgress += Time.deltaTime) >= StateDuration && setup.HasExitTime)
 			{
 				OnBeforeTransitionByExitTime();
 				RequestTransition(DefaultNextState);

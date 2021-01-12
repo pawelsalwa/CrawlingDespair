@@ -1,22 +1,9 @@
-﻿using System;
 using System.Reflection;
-using SalwaExtensions;
-using Tools;
 using UnityEditor;
 using UnityEngine;
 
-namespace Pawn
+namespace SalwaExtensions
 {
-	[Serializable]
-	public class StateSetup
-	{
-		public bool HasExitTime = false;
-		[DrawIf("HasExitTime")] public float ExitTime = 1f;
-	}
-// }
-
-#if UNITY_EDITOR
-
 	[CustomPropertyDrawer(typeof(DrawIfAttribute))]
 	public class DrawIfDrawer : PropertyDrawer
 	{
@@ -36,6 +23,4 @@ namespace Pawn
 			return base.GetPropertyHeight(property, label);
 		}
 	}
-
-#endif
 }

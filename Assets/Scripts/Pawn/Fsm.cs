@@ -1,3 +1,5 @@
+using Pawn.Setup;
+using Pawn.States;
 using UnityEngine;
 
 namespace Pawn
@@ -8,11 +10,16 @@ namespace Pawn
 
 		private State currentState;
 
-		public Fsm(Pawn pawn, FsmSetup setupFsmSetup)
+		public Fsm(Pawn pawn, FsmSetup setup)
 		{
 			Pawn = pawn;
-			
-			
+
+			Move = new Move(this, setup.moving);
+			Attack0 = new Attack0(this, setup.attack0);
+			Attack1 = new Attack1(this, setup.attack1);
+			Dodge = new Dodge(this, setup.dodge);
+
+			PerformTransition(Move);
 		}
 
 		public State DefaultState => Move;
