@@ -1,5 +1,5 @@
 ﻿using System;
-using Character.Teddy;
+using Pawn.Teddy;
 using UnityEngine;
 
 namespace Dungeon

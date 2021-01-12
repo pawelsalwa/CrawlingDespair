@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Character.Teddy;
-using ScriptableObjects;
+﻿
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour

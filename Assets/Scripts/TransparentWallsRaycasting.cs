@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Character.Teddy;
+using Pawn.Teddy;
 using UnityEngine;
 
 public class TransparentWallsRaycasting : MonoBehaviour {
