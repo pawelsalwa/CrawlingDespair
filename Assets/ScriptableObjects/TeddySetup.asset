@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6444314c5d5e49c0945281f63ec881e7, type: 3}
-  m_Name: TeddyPawnSetup
+  m_Name: TeddySetup
   m_EditorClassIdentifier: 
   Fsm:
     moving:
       HasExitTime: 0
       ExitTime: 1
     dodge:
-      HasExitTime: 0
+      HasExitTime: 1
       ExitTime: 1
       EnableAttackTreshold: 0.2
-    melee0:
-      HasExitTime: 0
+    attack0:
+      HasExitTime: 1
       ExitTime: 1
-      TransitionToNextComboExitTime: 1
+      TransitionToNextComboExitTime: 0.58
       ComboWindowStart: 0
       ComboWindowEnd: 2
       DealDmgWindowStart: 0.15
       DealDmgWindowEnd: 0.35
       TrailStart: 0.1
       TrailEnd: 0.4
-    melee1:
-      HasExitTime: 0
+    attack1:
+      HasExitTime: 1
       ExitTime: 1
-      TransitionToNextComboExitTime: 1
+      TransitionToNextComboExitTime: 0.63
       ComboWindowStart: 0
       ComboWindowEnd: 2
       DealDmgWindowStart: 0.15
@@ -43,9 +43,9 @@ MonoBehaviour:
   Movement:
     WalkSpeed: 2.5
     RunSpeed: 4.5
-    TurningFactor: 0.3
+    TurningFactor: 6
   Animator:
     MovementDampTime: 0.1
-    melee1Offset: 0.2
+    melee1Offset: 0.15
     dodgeOffset: 0.2
     MovingTransDur: 0.2

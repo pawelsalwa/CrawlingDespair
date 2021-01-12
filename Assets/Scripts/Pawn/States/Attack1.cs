@@ -10,5 +10,7 @@ namespace Pawn.States
 		}
 
 		protected override Action AnimCall => pawn.Animator.Melee1;
+
+		protected override State NextComboState => fsm.Attack0;
 	}
 }
