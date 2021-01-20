@@ -6,7 +6,7 @@ namespace Pawn
 	public class Controller : MonoBehaviour
 	{
 
-		private void Start() => GetComponent<Pawn>().Controller = this;
+		protected virtual void Start() => GetComponent<Pawn>().Controller = this;
 
 		public virtual void UpdateInput(Input input)
 		{

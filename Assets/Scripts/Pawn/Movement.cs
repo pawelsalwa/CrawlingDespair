@@ -3,31 +3,32 @@ using UnityEngine;
 
 namespace Pawn
 {
-	/// <summary>
-	/// Implement this and add logic to control <see cref="characterController"/> to handle character motions.
-	/// </summary>
 	public class Movement
 	{
-		// public event Action<Vector2> OnGroundedStart;
+		
+		private readonly CharacterController characterController;
+		private readonly MovementSetup setup;
+		private float targetRotY;
 
-		protected readonly CharacterController characterController;
-		protected readonly MovementSetup setup;
-		protected readonly PawnTurning pawnTurning;
-
-		/// <summary> This can be used for anim, its local space velocity </summary>
+		/// <summary> This can be used for anim, its local space velocity (not affected by rotation) </summary>
 		public Vector2 InternalCharacterVelocity { get; private set; }
 
 		public Movement(CharacterController characterController, MovementSetup setup)
 		{
 			this.characterController = characterController;
 			this.setup = setup;
-			this.pawnTurning = new PawnTurning(characterController.transform, setup);
 		}
 
-		public void Update()
+		public void FixedUpdate()
 		{
-			pawnTurning.Update();
+			var eulerAngles = characterController.transform.eulerAngles; 
+			var currentRotY = Mathf.LerpAngle(eulerAngles.y, targetRotY, setup.TurningFactor * Time.deltaTime);
+			// Debug.Log($"<color=white>current: {angles}, new: {eulerAngles}</color>");
+			eulerAngles = new Vector3(eulerAngles.x, currentRotY, eulerAngles.z);
+			characterController.transform.eulerAngles = eulerAngles;
 		}
+
+		public void SetLookAtAngle(float lookAtAngle) => targetRotY = lookAtAngle;
 
 		public void MoveByInput(Vector2 inputVal, bool teddyInputRun)
 		{

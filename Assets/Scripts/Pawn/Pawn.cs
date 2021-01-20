@@ -29,13 +29,13 @@ namespace Pawn
 		{
 			if (Controller && !Refs.overrideInput) Controller.UpdateInput(Input);
 			Fsm?.Update();
-			Movement.Update();
 			Animator.Update(Movement.InternalCharacterVelocity, Input.Run);
 		}
 		
 		private void FixedUpdate()
 		{
 			Fsm?.FixedUpdate();
+			Movement.FixedUpdate();
 		}
 
 		private void OnValidate() => DebugOverrideInput();

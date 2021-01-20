@@ -15,6 +15,7 @@ namespace Pawn
 			input.Attack = PlayerActions.Fire.triggered;
 			input.Dodge = PlayerActions.Dodge.triggered;
 			input.Run = PlayerActions.Run.phase == InputActionPhase.Started;
+			input.LookAtAngle = MainCamera.gameplayCamera.transform.rotation.eulerAngles.y; // for now get target rotation from cm orbit camera
 		}
 	}
 }

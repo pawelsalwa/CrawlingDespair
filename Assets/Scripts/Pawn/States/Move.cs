@@ -25,6 +25,10 @@ namespace Pawn.States
 			}
 		}
 
-		protected override void OnFixedUpdate() => pawn.Movement.MoveByInput(input.Movement, input.Run);
+		protected override void OnFixedUpdate()
+		{
+			pawn.Movement.MoveByInput(input.Movement, input.Run);
+			pawn.Movement.SetLookAtAngle(input.LookAtAngle);
+		}
 	}
 }

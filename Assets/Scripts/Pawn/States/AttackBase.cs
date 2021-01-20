@@ -32,6 +32,7 @@ namespace Pawn.States
 		protected override void OnEnter()
 		{
 			comboActivated = inputReset = false;
+			pawn.Movement.SetLookAtAngle(input.LookAtAngle); // this makes cool rotation snap on attacking which feels kinda cool
 		}
 
 		protected override void OnUpdate()
