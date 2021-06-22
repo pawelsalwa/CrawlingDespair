@@ -1,0 +1,15 @@
+{
+    "name": "Obsolete",
+    "references": [
+        "GUID:aa2faebe28caa43489dc649976ed8279"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

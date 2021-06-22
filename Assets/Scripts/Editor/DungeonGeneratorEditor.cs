@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Dungeon;
-using Dungeon.Data;
+﻿using Dungeon;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(DungeonGenerator))]
-public class DungeonGeneratorEditor : Editor
+public class DungeonGeneratorEditor : UnityEditor.Editor
 {
 	private DungeonGenerator targetObj;
 	

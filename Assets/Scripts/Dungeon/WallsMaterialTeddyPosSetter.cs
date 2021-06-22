@@ -5,7 +5,7 @@ namespace Dungeon
 {
 	public class WallsMaterialTeddyPosSetter : MonoBehaviour
 	{
-		public Pawn.Pawn teddy;
+		public GameObject teddy;
 		public Material[] wallsMaterials;
 
 		public void Update()

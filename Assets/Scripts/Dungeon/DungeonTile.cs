@@ -1,17 +1,14 @@
-﻿using System;
-using Dungeon.Data;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Dungeon
 {
 	public class DungeonTile : MonoBehaviour
 	{
-		public Tile TileData
-		{
-			set { txt.text = $"{value.x}, {value.y}"; }
-		}
+		// public Tile TileData
+		// {
+		// 	set { txt.text = $"{value.x}, {value.y}"; }
+		// }
 
-		public TextMeshProUGUI txt;
+		// public TextMeshProUGUI txt;
 	}
 }

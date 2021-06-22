@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Common.ExtensionMethods;
 using Dungeon.Data;
-using ExtensionMethods;
 using UnityEngine;
 
 namespace Dungeon
@@ -100,7 +97,7 @@ namespace Dungeon
 			var newTile = Instantiate(template, parent);
 			newTile.gameObject.SetActive(true);
 			newTile.transform.position = new Vector3(tile.x * tileSize.x, 0f,tile.y * tileSize.y);
-			newTile.TileData = tile;
+			// newTile.TileData = tile;
 		}
 
 		private void InstantiateMapFromDatabase()

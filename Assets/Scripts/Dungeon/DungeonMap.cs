@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Dungeon;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DungeonMap : MonoBehaviour
 {

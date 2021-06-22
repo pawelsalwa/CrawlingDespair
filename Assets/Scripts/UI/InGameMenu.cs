@@ -1,8 +1,6 @@
-using GameCore;
-using Input;
+// using Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace UI
 {
@@ -13,35 +11,35 @@ namespace UI
 		private CanvasGroup _canvasGroup;
 		private CanvasGroup canvasGroup => _canvasGroup ? _canvasGroup : _canvasGroup = GetComponent<CanvasGroup>();
 		
-		protected override void OnEnable()
-		{
-			InputMappingWrapper.InputMapping.Player.Esc.performed += PauseGame;
-			InputMappingWrapper.InputMapping.UI.Esc.performed += UnpauseGame;
-			UnpauseGame(default);
-		}
+		// protected override void OnEnable()
+		// {
+		// 	InputMappingWrapper.InputMapping.Player.Esc.performed += PauseGame;
+		// 	InputMappingWrapper.InputMapping.UI.Esc.performed += UnpauseGame;
+		// 	UnpauseGame();
+		// }
+		//
+		// protected override void OnDisable()
+		// {
+		// 	InputMappingWrapper.InputMapping.Player.Esc.performed -= PauseGame;
+		// 	InputMappingWrapper.InputMapping.UI.Esc.performed -= UnpauseGame;
+		// }
 
-		protected override void OnDisable()
-		{
-			InputMappingWrapper.InputMapping.Player.Esc.performed -= PauseGame;
-			InputMappingWrapper.InputMapping.UI.Esc.performed -= UnpauseGame;
-		}
-
-		private void PauseGame(InputAction.CallbackContext obj) 
+		private void PauseGame() 
 		{
 			Time.timeScale = 0f;
 			canvasGroup.alpha = 1f;
 			canvasGroup.interactable = true;
-			InputMappingWrapper.EnableUiMapping();
+			// InputMappingWrapper.EnableUiMapping();
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 		}
 		
-		private void UnpauseGame(InputAction.CallbackContext obj)
+		private void UnpauseGame()
 		{
 			Time.timeScale = 1f;
 			canvasGroup.alpha = 0f;
 			canvasGroup.interactable = false;
-			InputMappingWrapper.EnablePlayerMapping();
+			// InputMappingWrapper.EnablePlayerMapping();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
